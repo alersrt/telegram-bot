@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'templates'
+apply plugin: 'webapp-templates'
+group 'com.instrumentisto'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+// Global repositories
+repositories {
+    mavenCentral()
+}
+
+// Gradle scripts repositories and dependencies.
+buildscript {
+    repositories {
+        maven {
+            url 'http://dl.bintray.com/cjstehno/public'
+        }
+    }
+    dependencies {
+        classpath 'gradle-templates:gradle-templates:1.4.1'
+    }
+}
+
+// Project dependencies.
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
