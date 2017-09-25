@@ -1,4 +1,4 @@
-MAINLINE_BRANCH := master
+MAINLINE_BRANCH := dev
 CURRENT_BRANCH := $(shell git branch | grep \* | cut -d ' ' -f2)
 
 
