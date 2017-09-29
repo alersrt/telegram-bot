@@ -17,11 +17,11 @@ public class MessageServiceTelegram implements MessageService {
 
     @Override
     public void updateService() {
-
+        //TODO: need realize this method
     }
 
     @Override
     public void run() {
-
+        //TODO: need realize this method
     }
 }

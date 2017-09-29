@@ -15,11 +15,13 @@ public class MessageActionsTelegram implements MessageActions {
 
     @Override
     public List<Message> getMessages() {
+        //TODO: need realize this method
         return null;
     }
 
     @Override
     public Message sendMessage(Message message) {
+        //TODO: need realize this method
         return null;
     }
 }
