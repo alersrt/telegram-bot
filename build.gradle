@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'templates'
 apply plugin: 'webapp-templates'
+
 group 'com.instrumentisto'
 version '1.0-SNAPSHOT'
 
@@ -26,4 +27,28 @@ buildscript {
 // Project dependencies.
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+// Spring framework
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-tools', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.7.RELEASE'
+}
+
+// Apache commons
+dependencies {
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+}
+
+// Java Telegram Bot API
+dependencies {
+    compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: '3.3.0'
+}
+
+// Create JAR
+jar {
+    baseName = rootProject.name
+    version =  '0.1.0'
 }
