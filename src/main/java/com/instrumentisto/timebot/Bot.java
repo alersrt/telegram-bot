@@ -8,7 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 
 
 /**
- * Is main class of Time AI application. You can starts here.
+ * Time Bot is a application that implements Telegram bot API.
+ * This application should return the current time to GMT, in response to the
+ * request "/time" of the user of the messenger "Telegram".
  */
 
 @Configuration
@@ -21,6 +23,11 @@ public class Bot {
         System.out.println("Hello, I am a Bot");
     }
 
+    /**
+     * Just runs new Spring application with arguments from CLI.
+     *
+     * @param args String[]   CLI arguments.
+     */
     public static void main(String[] args) {
         SpringApplication.run(Bot.class, args);
     }

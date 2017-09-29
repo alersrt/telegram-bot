@@ -6,28 +6,28 @@ package com.instrumentisto.timebot.entity;
 public interface Message {
 
     /**
-     * This method is returning value of message's text field.
+     * Returns value of message's text field.
      *
      * @return {@link String} value.
      */
     String getText();
 
     /**
-     * This method sets a text field of message.
+     * Sets a text field of message.
      *
      * @param text is value in which you need to set message's text field.
      */
     void setText(String text);
 
     /**
-     * This method returns value of chatId field.
+     * Returns value of chatId field.
      *
      * @return {@link String} value.
      */
     String getChatId();
 
     /**
-     * This method sets a chatId field of message.
+     * Sets a chatId field of message.
      *
      * @param chatId is vule in which you need to set chatId field.
      */
