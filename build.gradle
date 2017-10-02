@@ -1,3 +1,19 @@
+// Gradle scripts repositories and dependencies.
+buildscript {
+    repositories {
+        maven {
+            url 'http://dl.bintray.com/cjstehno/public'
+        }
+    }
+    dependencies {
+        classpath 'gradle-templates:gradle-templates:1.4.1'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '1.5.7.RELEASE'
+}
+
 apply plugin: 'java'
 apply plugin: 'templates'
 apply plugin: 'webapp-templates'
@@ -12,38 +28,36 @@ repositories {
     mavenCentral()
 }
 
-// Gradle scripts repositories and dependencies.
-buildscript {
-    repositories {
-        maven {
-            url 'http://dl.bintray.com/cjstehno/public'
-        }
-    }
-    dependencies {
-        classpath 'gradle-templates:gradle-templates:1.4.1'
-    }
-}
-
 // Project dependencies.
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: gradle.junitVersion
-}
-
-// Spring framework
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-tools', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: gradle.sbVersion
-}
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: gradle.sbVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: gradle.sbVersion
 
-// Java Telegram Bot API
-dependencies {
     compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: gradle.jtbaVersion
+
+    testCompile group: 'junit', name: 'junit', version: gradle.junitVersion
 }
 
-// Create JAR
+springBoot {
+    executable = true
+}
+
 jar {
     baseName = rootProject.name
     version = '0.1.0'
+    manifest {
+        attributes(
+                'Main-Class': 'com.instrumentisto.timebot.Bot'
+        )
+    }
+    from {
+        (configurations.runtime).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
+

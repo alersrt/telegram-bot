@@ -1,8 +1,7 @@
 package com.instrumentisto.timebot.repository;
 
-import java.util.List;
-
 import com.instrumentisto.timebot.entity.Message;
+import java.util.List;
 
 
 /**
@@ -12,7 +11,7 @@ import com.instrumentisto.timebot.entity.Message;
  * conversely it returns Message which got from
  * the same API.
  */
-public interface MessageDAO {
+public interface MessageRepository {
 
     /**
      * Returns {@link List<Message>} of updates which got from API. Also this
