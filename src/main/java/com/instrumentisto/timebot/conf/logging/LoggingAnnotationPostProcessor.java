@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 public class LoggingAnnotationPostProcessor implements BeanPostProcessor {
 
     /**
-     * Implementation of {@code Object postProcessBeforeInitialization(Object bean, String beanName)}
+     * Implementation of {@code Object postProcessBeforeInitialization(
+     * Object bean, String beanName)}
      * {@link BeanPostProcessor}'s method.
      *
      * @param bean {@link org.slf4j.Logger} bean.
@@ -35,12 +36,14 @@ public class LoggingAnnotationPostProcessor implements BeanPostProcessor {
                     field.setAccessible(true);
                     try {
                         if (!annotation.value().isEmpty()) {
-                            field.set(bean, LoggerFactory.getLogger(annotation.value()));
+                            field.set(bean, LoggerFactory.getLogger(
+                                annotation.value()));
                         } else {
                             field.set(bean, LoggerFactory.getLogger(aClass));
                         }
                     } catch (IllegalAccessException e) {
-                        LoggerFactory.getLogger(this.getClass()).error(e.getMessage(), e);
+                        LoggerFactory.getLogger(
+                            this.getClass()).error(e.getMessage(), e);
                     }
                     field.setAccessible(accessible);
                 }
@@ -52,7 +55,8 @@ public class LoggingAnnotationPostProcessor implements BeanPostProcessor {
     }
 
     /**
-     * Implementation of {@code Object postProcessAfterInitialization(Object bean, String beanName)}
+     * Implementation of {@code Object postProcessAfterInitialization(
+     * Object bean, String beanName)}
      * {@link BeanPostProcessor}'s method.
      *
      * @param bean {@link org.slf4j.Logger} bean.
