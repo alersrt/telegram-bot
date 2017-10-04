@@ -3,14 +3,14 @@ package com.instrumentisto.timebot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
+@SpringBootApplication
 /**
  * Time Bot is a application that implements Telegram bot API. This application should return the
  * current time to GMT, in response to the request "/time" of the user of the messenger "Telegram".
  */
-@SpringBootApplication
 public class Bot {
 
+    //TODO:Doc?
     public Bot() {
         System.out.println("Hello, I am a Bot");
     }

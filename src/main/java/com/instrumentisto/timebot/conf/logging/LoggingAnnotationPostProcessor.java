@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAnnotationPostProcessor implements BeanPostProcessor {
 
+
     @Override
+    //TODO: Doc?
     public Object postProcessBeforeInitialization(Object bean, String beanName)
         throws BeansException {
         Class aClass = bean.getClass();
@@ -42,7 +44,9 @@ public class LoggingAnnotationPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
+
     @Override
+    //TODO: Doc?
     public Object postProcessAfterInitialization(Object bean, String beanName)
         throws BeansException {
         return bean;
