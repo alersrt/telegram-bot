@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 /**
  * Time Bot is a application that implements Telegram bot API. This application should return the
  * current time to GMT, in response to the request "/time" of the user of the messenger "Telegram".
