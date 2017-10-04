@@ -7,8 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Time Bot is a application that implements Telegram bot API. This application should return the
- * current time to GMT, in response to the request "/time" of the user of the messenger "Telegram".
+ * Time Bot is a application that implements Telegram bot API. This application
+ * should return the current time to GMT, in response to the request "/time" of
+ * the user of the messenger "Telegram".
  */
 @SpringBootApplication
 public class Bot {
@@ -17,12 +18,12 @@ public class Bot {
     private Logger logger;
 
     /**
-     * PostConstructor for {@link Bot}. At the current time moment it does not have any function
-     * except informing of user about success start.
+     * PostConstructor for {@link Bot}. At the current time moment it does not
+     * have any function except informing of user about success start.
      */
     @PostConstruct
     public void init() {
-        logger.info("Hello, I am a Bot");
+        this.logger.info("Hello, I am a Bot");
     }
 
     /**
