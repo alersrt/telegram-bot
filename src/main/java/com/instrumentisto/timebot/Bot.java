@@ -12,6 +12,7 @@ public class Bot {
 
     //TODO:Doc?
     public Bot() {
+        //TODO: Now you can use a logger. Is not it?
         System.out.println("Hello, I am a Bot");
     }
 
