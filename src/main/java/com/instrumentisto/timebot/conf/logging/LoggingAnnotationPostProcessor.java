@@ -12,9 +12,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAnnotationPostProcessor implements BeanPostProcessor {
 
-
+    /**
+     * Implementation of {@code Object postProcessBeforeInitialization(Object bean, String beanName)}
+     * {@link BeanPostProcessor}'s method.
+     *
+     * @param bean {@link org.slf4j.Logger} bean.
+     * @param beanName name of returned bean.
+     * @return {@link org.slf4j.Logger} object.
+     * @throws BeansException exception which will can returned.
+     */
     @Override
-    //TODO: Doc?
     public Object postProcessBeforeInitialization(Object bean, String beanName)
         throws BeansException {
         Class aClass = bean.getClass();
@@ -44,9 +51,16 @@ public class LoggingAnnotationPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
-
+    /**
+     * Implementation of {@code Object postProcessAfterInitialization(Object bean, String beanName)}
+     * {@link BeanPostProcessor}'s method.
+     *
+     * @param bean {@link org.slf4j.Logger} bean.
+     * @param beanName name of returned bean.
+     * @return {@link org.slf4j.Logger} object.
+     * @throws BeansException exception which will can returned.
+     */
     @Override
-    //TODO: Doc?
     public Object postProcessAfterInitialization(Object bean, String beanName)
         throws BeansException {
         return bean;

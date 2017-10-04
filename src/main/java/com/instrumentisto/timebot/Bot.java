@@ -1,19 +1,29 @@
 package com.instrumentisto.timebot;
 
+import com.instrumentisto.timebot.conf.logging.Logging;
+import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+
 /**
  * Time Bot is a application that implements Telegram bot API. This application should return the
  * current time to GMT, in response to the request "/time" of the user of the messenger "Telegram".
  */
+@SpringBootApplication
 public class Bot {
 
-    //TODO:Doc?
-    public Bot() {
-        //TODO: Now you can use a logger. Is not it?
-        System.out.println("Hello, I am a Bot");
+    @Logging
+    private Logger logger;
+
+    /**
+     * PostConstructor for {@link Bot}. At the current time moment it does not have any function
+     * except informing of user about success start.
+     */
+    @PostConstruct
+    public void init() {
+        logger.info("Hello, I am a Bot");
     }
 
     /**
