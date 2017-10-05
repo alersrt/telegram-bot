@@ -11,7 +11,7 @@ public interface ResponseHandler {
     /**
      * Returns list of outputs answers to requests for bot.
      *
-     * @return {@link List<BaseDTO>} list.
+     * @return {@link List} of {@link BaseDTO}.
      */
     List<BaseDTO> handleResponse();
 }

@@ -27,7 +27,7 @@ public interface MessageTransferService {
     /**
      * Returns list of all {@link Message} objects from repository.
      *
-     * @return {@link List<Message>} collection.
+     * @return {@link List} of {@link Message}.
      */
     List<Message> getMessages();
 
