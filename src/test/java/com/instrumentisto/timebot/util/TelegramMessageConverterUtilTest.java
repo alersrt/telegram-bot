@@ -18,12 +18,12 @@ public class TelegramMessageConverterUtilTest {
      * Start boundaries for the test.
      */
     @Before
-    public void beforeTest() {
+    public void setUp() {
         converterUtil = new TelegramMessageConverterUtil();
     }
 
     /**
-     * Test for {@code toDTO} method.
+     * Test for {@code toDTO()} method.
      */
     @Test
     public void testMessageToDTO() throws Exception, DTOException {
@@ -39,7 +39,7 @@ public class TelegramMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code fromDTO} method.
+     * Test for {@code fromDTO()} method.
      */
     @Test
     public void testMessageFromDTO() throws Exception, DTOException {
@@ -53,7 +53,7 @@ public class TelegramMessageConverterUtilTest {
         Message message2 = converterUtil.fromDTO(baseDTO);
 
         Assert.assertNotNull(message2);
-        Assert.assertEquals(message2, message1);
+        Assert.assertEquals(message1, message2);
     }
 
 }
