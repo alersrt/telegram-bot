@@ -33,29 +33,4 @@ public class BaseDTO {
     public String getValueOfField(String fieldName) {
         return map.get(fieldName);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        BaseDTO baseDTO = (BaseDTO) o;
-
-        return map != null ? map.equals(baseDTO.map) : baseDTO.map == null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return map != null ? map.hashCode() : 0;
-    }
 }

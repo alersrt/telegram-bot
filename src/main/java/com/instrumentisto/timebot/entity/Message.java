@@ -73,33 +73,4 @@ public class Message {
     public void setChatId(String chatId) {
         this.chatId = chatId;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Message message = (Message) o;
-
-        return id == message.id && (text != null ? text.equals(message.text) : message.text == null)
-            && (chatId != null ? chatId.equals(message.chatId) : message.chatId == null);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (chatId != null ? chatId.hashCode() : 0);
-        return result;
-    }
 }
