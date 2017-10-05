@@ -24,8 +24,8 @@ public class TelegramSendMessageConverterUtil implements ConverterUtil<SendMessa
      */
     @Override
     public SendMessage fromDTO(BaseDTO baseDto) throws DTOException {
-        return new SendMessage(
-            baseDto.getValueOfField("chatId"), baseDto.getValueOfField("text")
-        );
+        SendMessage sendMessage = new SendMessage(baseDto.getValueOfField("chatId"),
+            (String) baseDto.getValueOfField("text"));
+        return sendMessage;
     }
 }

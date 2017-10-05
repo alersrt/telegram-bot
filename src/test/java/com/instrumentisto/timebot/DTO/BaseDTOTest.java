@@ -44,7 +44,7 @@ public class BaseDTOTest {
         Assert.assertTrue("Test hashCode() for identical objects",
             baseDTO1.hashCode() == baseDTO2.hashCode());
 
-        baseDTO2.addValueOfField("field1", "field2");
+        baseDTO2.addValueOfField("field1", new Object());
 
         Assert.assertFalse("Test equals() for different objects",
             baseDTO1.equals(baseDTO2) && baseDTO2.equals(baseDTO1));

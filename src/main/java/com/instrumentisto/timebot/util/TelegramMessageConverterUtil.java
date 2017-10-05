@@ -28,8 +28,8 @@ public class TelegramMessageConverterUtil implements ConverterUtil<Message> {
     @Override
     public Message fromDTO(BaseDTO baseDto) throws DTOException {
         Message message = new Message();
-        message.setText(baseDto.getValueOfField("text"));
-        message.setChatId(baseDto.getValueOfField("chatId"));
+        message.setText((String) baseDto.getValueOfField("text"));
+        message.setChatId((String) baseDto.getValueOfField("chatId"));
         return message;
     }
 }

@@ -44,7 +44,7 @@ public class TelegramUpdateConverterUtilTest {
 
         Assert.assertNotNull(baseDTO);
         Assert.assertEquals(baseDTO.getValueOfField("text"), "test");
-        Assert.assertEquals(Integer.parseInt(baseDTO.getValueOfField("chatId")), 1);
+        Assert.assertEquals(baseDTO.getValueOfField("chatId"), 1);
     }
 
     /**
@@ -52,21 +52,10 @@ public class TelegramUpdateConverterUtilTest {
      */
     @Test(expected = DTOException.class)
     public void testUpdateFromDTO() throws Exception, DTOException {
-        Update update1 = mock(Update.class);
-        Message message = mock(Message.class);
-        User user = mock(User.class);
-        when(user.id()).thenReturn(1);
-        when(message.text()).thenReturn("test");
-        when(message.from()).thenReturn(user);
-        when(update1.message()).thenReturn(message);
-
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", "test");
-        baseDTO.addValueOfField("chatId", "1L");
+        baseDTO.addValueOfField("chatId", 1);
         Update update2 = converterUtil.fromDTO(baseDTO);
-
-        Assert.assertNotNull(update2);
-        Assert.assertEquals(update1, update2);
     }
 
 }

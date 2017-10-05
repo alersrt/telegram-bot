@@ -18,7 +18,7 @@ public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
     public BaseDTO toDTO(Update update) {
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", update.message().text());
-        baseDTO.addValueOfField("chatId", update.message().from().id().toString());
+        baseDTO.addValueOfField("chatId", update.message().from().id());
         return baseDTO;
     }
 
