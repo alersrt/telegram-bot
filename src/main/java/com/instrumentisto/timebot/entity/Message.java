@@ -8,7 +8,7 @@ public class Message {
     /**
      * ID field which will used for work with database.
      */
-    private long id;
+    private int id;
 
     /**
      * Text field which contains text of message.
@@ -34,7 +34,7 @@ public class Message {
      *
      * @param id is value to which need to set {@code id} field.
      */
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
