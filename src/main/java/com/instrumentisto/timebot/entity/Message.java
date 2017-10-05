@@ -74,6 +74,9 @@ public class Message {
         this.chatId = chatId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -89,6 +92,9 @@ public class Message {
             && (chatId != null ? chatId.equals(message.chatId) : message.chatId == null);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));

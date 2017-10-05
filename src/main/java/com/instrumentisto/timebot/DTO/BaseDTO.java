@@ -34,6 +34,9 @@ public class BaseDTO {
         return map.get(fieldName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -48,6 +51,9 @@ public class BaseDTO {
         return map != null ? map.equals(baseDTO.map) : baseDTO.map == null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return map != null ? map.hashCode() : 0;
