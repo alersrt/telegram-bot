@@ -3,10 +3,12 @@ package com.instrumentisto.timebot.util;
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.exception.DTOException;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.springframework.stereotype.Component;
 
 /**
  * Class-implementation of {@link ConverterUtil} for {@link SendMessage}.
  */
+@Component
 public class TelegramSendMessageConverterUtil implements ConverterUtil<SendMessage> {
 
     /**
