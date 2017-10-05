@@ -4,60 +4,64 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * It is Unit-test for {@link Message}.
+ * Unit-test for {@link Message}.
  */
 public class MessageTest {
 
     /**
-     * Test for {@code id} field getter.
+     * Test getter and setter for {@code id} field.
      */
     @Test
-    public void getId() throws Exception {
+    public void testGetAndSetForId() throws Exception {
+        Message message = new Message();
 
+        Assert.assertEquals(0, message.getId());
+
+        message.setId(1);
+
+        Assert.assertEquals(1, message.getId());
     }
 
     /**
-     * Test for {@code id} field setter.
+     * Test getter and setter for {@code text} field.
      */
     @Test
-    public void setId() throws Exception {
+    public void testGetAndSetForText() throws Exception {
+        Message message = new Message();
+
+        Assert.assertNull(message.getText());
+
+        message.setText("test");
+
+        Assert.assertEquals("test", message.getText());
     }
 
     /**
-     * Test for {@code text} field getter.
+     * Test getter and setter for {@code chatId} field.
      */
     @Test
-    public void getText() throws Exception {
-    }
+    public void testGetAndSetForChatId() throws Exception {
+        Message message = new Message();
 
-    /**
-     * Test for {@code text} field setter.
-     */
-    @Test
-    public void setText() throws Exception {
-    }
+        Assert.assertNull(message.getChatId());
 
-    /**
-     * Test for {@code chatId} field getter.
-     */
-    @Test
-    public void getChatId() throws Exception {
-    }
+        message.setChatId("1L");
 
-    /**
-     * Test for {@code chatId} field setter.
-     */
-    @Test
-    public void setChatId() throws Exception {
+        Assert.assertEquals("1L", message.getChatId());
     }
 
     /**
      * Test for {@code equals()} and {@code hashCode()} methods.
      */
     @Test
-    public void testEqualsHashCode() {
+    public void testEqualsAndHashCode() {
         Message message1 = new Message();
         Message message2 = new Message();
+
+        Assert.assertTrue("Test equals() for clear objects",
+            message1.equals(message2) && message2.equals(message1));
+        Assert.assertTrue("Test hashCode() for clear objects",
+            message1.hashCode() == message2.hashCode());
 
         message1.setId(1);
         message1.setText("The same message");
@@ -81,6 +85,8 @@ public class MessageTest {
         Assert.assertFalse("Test hashCode() for different objects",
             message1.hashCode() == message2.hashCode());
 
+        Assert.assertFalse("Test equals() for null", message1.equals(null));
+        Assert.assertTrue("Test equals() for the same object", message1.equals(message1));
     }
 
 

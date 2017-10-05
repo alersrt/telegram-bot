@@ -85,13 +85,8 @@ public class Message {
 
         Message message = (Message) o;
 
-        if (id != message.id) {
-            return false;
-        }
-        if (text != null ? !text.equals(message.text) : message.text != null) {
-            return false;
-        }
-        return chatId != null ? chatId.equals(message.chatId) : message.chatId == null;
+        return id == message.id && (text != null ? text.equals(message.text) : message.text == null)
+            && (chatId != null ? chatId.equals(message.chatId) : message.chatId == null);
     }
 
     @Override
