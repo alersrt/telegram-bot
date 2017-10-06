@@ -1,5 +1,9 @@
 package com.instrumentisto.timebot.service;
 
+import static org.mockito.Mockito.mock;
+
+import com.instrumentisto.timebot.entity.Message;
+import com.instrumentisto.timebot.repository.MessageRepository;
 import org.junit.Test;
 
 /**
@@ -21,6 +25,15 @@ public class TelegramMessageTransferServiceTest {
     @Test
     public void findById() throws Exception {
         // TODO: Need to realize
+
+        MessageRepository messageRepository = mock(MessageRepository.class);
+
+
+        Message message = mock(Message.class);
+        message.setId(1);
+        message.setText("t1");
+        message.setChatId("1");
+
     }
 
     /**
