@@ -44,5 +44,4 @@ public class TelegramMessageQueryTimeServiceTest {
         Assert.assertNotNull(outMessage);
         Assert.assertEquals(message, outMessage);
     }
-
 }
