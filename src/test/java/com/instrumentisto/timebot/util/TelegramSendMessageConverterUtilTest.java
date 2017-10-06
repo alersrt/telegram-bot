@@ -50,5 +50,4 @@ public class TelegramSendMessageConverterUtilTest {
         Assert.assertNotNull(sendMessage2);
         Assert.assertEquals(sendMessage1.getParameters(), sendMessage2.getParameters());
     }
-
 }

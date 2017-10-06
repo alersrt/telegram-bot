@@ -57,5 +57,4 @@ public class TelegramMessageConverterUtilTest {
         Assert.assertNotNull(message2);
         Assert.assertEquals(message1, message2);
     }
-
 }

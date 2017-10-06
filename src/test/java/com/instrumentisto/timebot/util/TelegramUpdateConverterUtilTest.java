@@ -59,5 +59,4 @@ public class TelegramUpdateConverterUtilTest {
         baseDTO.addValueOfField("chatId", 1);
         Update update2 = converterUtil.fromDTO(baseDTO);
     }
-
 }
