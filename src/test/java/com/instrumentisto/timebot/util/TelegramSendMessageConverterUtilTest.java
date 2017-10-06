@@ -46,12 +46,7 @@ public class TelegramSendMessageConverterUtilTest {
         SendMessage sendMessage2 = converterUtil.fromDTO(baseDTO);
 
         Assert.assertNotNull(sendMessage2);
-
-        /* TODO: There is no comparing
-         * We can't to compare two SendMessage object because
-         * there was not realize equals() and hashCode() methods.
-         */
-        Assert.assertEquals(sendMessage1, sendMessage2);
+        Assert.assertEquals(sendMessage1.getParameters(), sendMessage2.getParameters());
     }
 
 }
