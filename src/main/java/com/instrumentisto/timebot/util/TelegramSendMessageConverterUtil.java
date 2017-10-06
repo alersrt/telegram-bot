@@ -6,7 +6,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Component;
 
 /**
- * Class-implementation of {@link ConverterUtil} for {@link SendMessage}.
+ * Implementation of {@link ConverterUtil} for {@link SendMessage}.
  */
 @Component
 public class TelegramSendMessageConverterUtil implements ConverterUtil<SendMessage> {

@@ -34,5 +34,4 @@ public interface MessageRepository {
      * Remove all messages from repository.
      */
     void removeAll();
-
 }

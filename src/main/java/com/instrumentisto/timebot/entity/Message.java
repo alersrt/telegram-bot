@@ -1,7 +1,7 @@
 package com.instrumentisto.timebot.entity;
 
 /**
- * The class describes entity which presents bot's message.
+ * Describes entity which presents bot's message.
  */
 public class Message {
 

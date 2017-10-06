@@ -24,6 +24,7 @@ public class TelegramMessageConverterUtilTest {
 
     /**
      * Test for {@code toDTO()} method.
+     * TODO: What expects?
      */
     @Test
     public void testMessageToDTO() throws Exception, DTOException {
@@ -40,6 +41,7 @@ public class TelegramMessageConverterUtilTest {
 
     /**
      * Test for {@code fromDTO()} method.
+     * TODO: What expects?
      */
     @Test
     public void testMessageFromDTO() throws Exception, DTOException {

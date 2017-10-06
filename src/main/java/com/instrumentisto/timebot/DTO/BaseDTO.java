@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The class describes DTO entity which will used for transfer API or {@link
+ * Describes DTO entity which will used for transfer API or {@link
  * com.instrumentisto.timebot.entity.Message} objects between Controller and Handler layers.
  */
 public class BaseDTO {
@@ -16,6 +16,7 @@ public class BaseDTO {
 
     /**
      * Adds field which must be save.
+     *
      *  @param fieldName name of saved object's field.
      * @param fieldValue value of saved object's field.
      */

@@ -40,7 +40,7 @@ dependencies {
     compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: gradle.jtbaVersion
 
     testCompile group: 'junit', name: 'junit', version: gradle.junitVersion
-    testCompile group: 'org.mockito', name: 'mockito-core', version: graddle.mockitoVersion
+    testCompile group: 'org.mockito', name: 'mockito-core', version: gradle.mockitoVersion
 }
 
 springBoot {

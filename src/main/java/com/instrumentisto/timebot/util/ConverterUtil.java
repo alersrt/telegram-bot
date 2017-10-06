@@ -25,5 +25,4 @@ public interface ConverterUtil<T> {
      * @return {@link T} value.
      */
     T fromDTO(BaseDTO baseDto) throws DTOException;
-
 }

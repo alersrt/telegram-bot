@@ -6,7 +6,7 @@ import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Component;
 
 /**
- * Class-implementation of {@link ConverterUtil} for {@link Update}.
+ * Implementation of {@link ConverterUtil} for {@link Update}.
  */
 @Component
 public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
