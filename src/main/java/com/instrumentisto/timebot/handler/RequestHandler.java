@@ -1,7 +1,7 @@
 package com.instrumentisto.timebot.handler;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
-import com.instrumentisto.timebot.exception.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOException;
 
 /**
  * Handler for input request.

@@ -2,7 +2,7 @@ package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.entity.Message;
-import com.instrumentisto.timebot.exception.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +23,8 @@ public class TelegramMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code toDTO()} method.
-     * TODO: What expects?
+     * Test for {@code toDTO()} method. Here is expects equality between fields of original {@link
+     * Message} and {@link BaseDTO} to which original is converted.
      */
     @Test
     public void testMessageToDTO() throws Exception, DTOException {
@@ -40,8 +40,8 @@ public class TelegramMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code fromDTO()} method.
-     * TODO: What expects?
+     * Test for {@code fromDTO()} method. Here is expects equality between fields of {@link BaseDTO}
+     * and {@link Message} which is restored from the DTO.
      */
     @Test
     public void testMessageFromDTO() throws Exception, DTOException {

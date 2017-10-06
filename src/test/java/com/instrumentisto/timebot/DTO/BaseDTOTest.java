@@ -10,8 +10,9 @@ import org.junit.Test;
 public class BaseDTOTest {
 
     /**
-     * Test for {@code addValueOfField()} and {@code getValueOfField()} methods.
-     * TODO: What expects?
+     * Test for {@code addValueOfField()} and {@code getValueOfField()} methods. Here commits check
+     * about equality between object which stored as field in DTO and object which was got from DTO.
+     * Here is expects equality between stored and restored objects.
      */
     @Test
     public void testGetAndAddValueOfField() throws Exception {

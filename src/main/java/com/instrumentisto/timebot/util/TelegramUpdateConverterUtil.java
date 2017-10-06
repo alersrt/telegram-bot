@@ -1,7 +1,7 @@
 package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
-import com.instrumentisto.timebot.exception.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOException;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Component;
 
