@@ -37,7 +37,8 @@ public class TelegramMessageConverterUtilTest {
 
         Assert.assertNotNull(baseDTO);
         Assert.assertEquals(baseDTO.getValueOfField("text"), message.getText());
-        Assert.assertEquals(baseDTO.getValueOfField("chatId"), message.getChatId());
+        Assert.assertEquals(baseDTO.getValueOfField("chatId"),
+            message.getChatId());
     }
 
     /**

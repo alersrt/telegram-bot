@@ -123,8 +123,8 @@ public class TelegramMessageTransferServiceTest {
      * Test for {@code clearRepository} method.
      *
      * Checks assertion:
-     * Nonempty {@link List} of {@link Message} must be empty after call of this
-     * method.
+     * Nonempty inner repository's {@link List} of {@link Message} must be empty
+     * after call of this method.
      */
     @Test
     public void clearRepository() throws Exception {
