@@ -13,10 +13,12 @@ import org.junit.Test;
 public class TelegramMessageQueryTimeServiceTest {
 
     /**
-     * Test for {@code queryProcessor({@link Message message})} method. Here is
-     * expects difference between input message and this method's answer. Also
-     * text of output message must contains date to which will set text in the
-     * tested method.
+     * Test for {@code queryProcessor(Message message)} method.
+     *
+     * Checks asserts:
+     * 1. Output {@link Message} must not be null.
+     * 2. Output message must be equals to another message, text field of which
+     * was set of hands.
      */
     @Test
     public void queryProcessor() throws Exception {

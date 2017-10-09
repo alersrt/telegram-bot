@@ -44,6 +44,9 @@ public class TelegramMessageTransferServiceTest {
 
     /**
      * Test for {@code saveMessage()} method.
+     *
+     * Checks assertions:
+     * 1.
      */
     @Test
     public void saveMessage() throws Exception {
