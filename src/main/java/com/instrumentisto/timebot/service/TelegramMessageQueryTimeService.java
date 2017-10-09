@@ -24,7 +24,8 @@ public class TelegramMessageQueryTimeService implements MessageQueryService {
     @Override
     public Message queryProcessor(Message message) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        String datetime = localDateTime.format(DateTimeFormatter.ofPattern(datetimeformat));
+        String datetime = localDateTime
+            .format(DateTimeFormatter.ofPattern(datetimeformat));
         message.setText(datetime);
         return message;
     }

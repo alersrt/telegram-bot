@@ -13,9 +13,10 @@ import org.junit.Test;
 public class TelegramMessageQueryTimeServiceTest {
 
     /**
-     * Test for {@code queryProcessor({@link com.instrumentisto.timebot.entity.Message message})}
-     * method. Here is expects difference between input message and this method's answer. Also text
-     * of output message must contains date to which will set text in the tested method.
+     * Test for {@code queryProcessor({@link Message message})} method. Here is
+     * expects difference between input message and this method's answer. Also
+     * text of output message must contains date to which will set text in the
+     * tested method.
      */
     @Test
     public void queryProcessor() throws Exception {
@@ -39,7 +40,8 @@ public class TelegramMessageQueryTimeServiceTest {
 
         LocalDateTime localDateTime = LocalDateTime
             .parse(outDateTime, DateTimeFormatter.ofPattern(datetimePattern));
-        message.setText(localDateTime.format(DateTimeFormatter.ofPattern(datetimePattern)));
+        message.setText(
+            localDateTime.format(DateTimeFormatter.ofPattern(datetimePattern)));
 
         Assert.assertNotNull(outMessage);
         Assert.assertEquals(message, outMessage);
