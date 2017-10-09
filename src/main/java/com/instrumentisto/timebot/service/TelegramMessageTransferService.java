@@ -1,6 +1,7 @@
 package com.instrumentisto.timebot.service;
 
 import com.instrumentisto.timebot.entity.Message;
+import com.instrumentisto.timebot.repository.MessageRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -10,21 +11,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class TelegramMessageTransferService implements MessageTransferService {
 
+    // TODO: Autowired this field after merge with Repository realization
+    MessageRepository messageRepository;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void saveMessage(Message message) {
-        // TODO: Realize this method
+        messageRepository.saveMessage(message);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Message findById(long id) {
-        // TODO: Realize this method
-        return null;
+    public Message findById(int id) {
+        return messageRepository.findById(id);
     }
 
     /**
@@ -32,8 +35,7 @@ public class TelegramMessageTransferService implements MessageTransferService {
      */
     @Override
     public List<Message> getMessages() {
-        // TODO: Realize this method
-        return null;
+        return messageRepository.getAllMessages();
     }
 
     /**
@@ -41,6 +43,6 @@ public class TelegramMessageTransferService implements MessageTransferService {
      */
     @Override
     public void clearRepository() {
-        // TODO: Realize this method
+        messageRepository.removeAll();
     }
 }

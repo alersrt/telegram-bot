@@ -5,18 +5,31 @@ import static org.mockito.Mockito.mock;
 import com.instrumentisto.timebot.entity.Message;
 import com.instrumentisto.timebot.repository.MessageRepository;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 /**
  * Unit-test for {@link TelegramMessageTransferService}
  */
 public class TelegramMessageTransferServiceTest {
 
+    @Mock
+    private MessageRepository messageRepository;
+
+    @InjectMocks
+    private MessageTransferService transferService = new TelegramMessageTransferService();
+
+    private Message message;
+
     /**
      * Test for {@code saveMessage()} method.
      */
     @Test
     public void saveMessage() throws Exception {
-        // TODO: Need to realize
+        message = new Message();
+        message.setId(1);
+        message.setText("t1");
+        message.setChatId("1");
     }
 
     /**
@@ -26,13 +39,10 @@ public class TelegramMessageTransferServiceTest {
     public void findById() throws Exception {
         // TODO: Need to realize
 
-        MessageRepository messageRepository = mock(MessageRepository.class);
+        TelegramMessageTransferService transferService = mock(
+            TelegramMessageTransferService.class
+        );
 
-
-        Message message = mock(Message.class);
-        message.setId(1);
-        message.setText("t1");
-        message.setChatId("1");
 
     }
 

@@ -14,8 +14,8 @@ public class TelegramMessageQueryTimeServiceTest {
 
     /**
      * Test for {@code queryProcessor({@link com.instrumentisto.timebot.entity.Message message})}
-     * method. Here is expects difference between input message and this method's answer. Also text of
-     * output message must contains date to which will set text in the tested method.
+     * method. Here is expects difference between input message and this method's answer. Also text
+     * of output message must contains date to which will set text in the tested method.
      */
     @Test
     public void queryProcessor() throws Exception {
