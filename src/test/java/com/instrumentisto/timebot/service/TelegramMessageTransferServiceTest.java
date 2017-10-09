@@ -44,7 +44,7 @@ public class TelegramMessageTransferServiceTest {
      * Test for {@code saveMessage()} method.
      *
      * Checks assertion:
-     * {@link Message} which contains in repository after saving must be equals
+     * {@link Message} which contained in repository after saving must be equals
      * to object which was saved.
      */
     @Test
@@ -123,8 +123,8 @@ public class TelegramMessageTransferServiceTest {
      * Test for {@code clearRepository} method.
      *
      * Checks assertion:
-     * Nonempty inner repository's {@link List} of {@link Message} must be empty
-     * after call of this method.
+     * Repository's nonempty inner {@link List} of {@link Message} must became
+     * empty after call of this method.
      */
     @Test
     public void clearRepository() throws Exception {
@@ -145,6 +145,6 @@ public class TelegramMessageTransferServiceTest {
 
         transferService.clearRepository();
 
-        Assert.assertEquals(new ArrayList<Message>(), messages);
+        Assert.assertTrue(messages.isEmpty());
     }
 }
