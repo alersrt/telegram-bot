@@ -15,10 +15,10 @@ public class TelegramMessageQueryTimeServiceTest {
     /**
      * Test for {@code queryProcessor(Message message)} method.
      *
-     * Checks asserts:
-     * 1. Output {@link Message} must not be null.
-     * 2. Output message must be equals to another message, text field of which
-     * was set of hands.
+     * Checks assertions:
+     *   1. Output {@link Message} must not be null.
+     *   2. Output message must be equals to another message, text field of which
+     *      was set of hands.
      */
     @Test
     public void queryProcessor() throws Exception {

@@ -19,8 +19,6 @@ import org.mockito.junit.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class TelegramMessageTransferServiceTest {
-    // TODO: Create docs for all methods
-
 
     /**
      * It is {@link MessageRepository} field to which {@link
@@ -45,8 +43,9 @@ public class TelegramMessageTransferServiceTest {
     /**
      * Test for {@code saveMessage()} method.
      *
-     * Checks assertions:
-     * 1.
+     * Checks assertion:
+     * 1. {@link Message} which contains in repository after saving must be equals
+     * to object which was saved.
      */
     @Test
     public void saveMessage() throws Exception {
@@ -71,6 +70,10 @@ public class TelegramMessageTransferServiceTest {
 
     /**
      * Test for {@code findById()} method.
+     *
+     * Checks assertions:
+     * 1. Retrieved {@link Message} must not be null.
+     * 2.
      */
     @Test
     public void findById() throws Exception {
@@ -90,6 +93,8 @@ public class TelegramMessageTransferServiceTest {
 
     /**
      * Test for {@code getMessages()} method.
+     *
+     * TODO: Create documentation for this method
      */
     @Test
     public void getMessages() throws Exception {
@@ -113,6 +118,8 @@ public class TelegramMessageTransferServiceTest {
 
     /**
      * Test for {@code clearRepository} method.
+     *
+     * TODO: Create documentation for this method
      */
     @Test
     public void clearRepository() throws Exception {
