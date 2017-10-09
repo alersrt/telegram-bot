@@ -44,7 +44,7 @@ public class TelegramMessageTransferServiceTest {
      * Test for {@code saveMessage()} method.
      *
      * Checks assertion:
-     * 1. {@link Message} which contains in repository after saving must be equals
+     * {@link Message} which contains in repository after saving must be equals
      * to object which was saved.
      */
     @Test
@@ -72,8 +72,9 @@ public class TelegramMessageTransferServiceTest {
      * Test for {@code findById()} method.
      *
      * Checks assertions:
-     * 1. Retrieved {@link Message} must not be null.
-     * 2.
+     * 1. Retrieved {@link Message} must not be null;
+     * 2. Retrieved object must be equals to object which stored in repository
+     * under specified ID.
      */
     @Test
     public void findById() throws Exception {
@@ -94,7 +95,9 @@ public class TelegramMessageTransferServiceTest {
     /**
      * Test for {@code getMessages()} method.
      *
-     * TODO: Create documentation for this method
+     * Checks assertions:
+     * 1. Retrieved {@link List} of {@link Message} must not be null;
+     * 2. Retrieved list of messages must be equals to inner list on repository.
      */
     @Test
     public void getMessages() throws Exception {
@@ -119,7 +122,9 @@ public class TelegramMessageTransferServiceTest {
     /**
      * Test for {@code clearRepository} method.
      *
-     * TODO: Create documentation for this method
+     * Checks assertion:
+     * Nonempty {@link List} of {@link Message} must be empty after call of this
+     * method.
      */
     @Test
     public void clearRepository() throws Exception {
