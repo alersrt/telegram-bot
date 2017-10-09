@@ -23,8 +23,9 @@ public class TelegramMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code toDTO()} method. Here is expects equality between fields of original {@link
-     * Message} and {@link BaseDTO} to which original is converted.
+     * Test for {@code toDTO()} method. Here is expects equality between fields
+     * of original {@link Message} and {@link BaseDTO} to which original is
+     * converted.
      */
     @Test
     public void testMessageToDTO() throws Exception, DTOException {
@@ -40,8 +41,9 @@ public class TelegramMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code fromDTO()} method. Here is expects equality between fields of {@link BaseDTO}
-     * and {@link Message} which is restored from the DTO.
+     * Test for {@code fromDTO()} method. Here is expects equality between
+     * fields of {@link BaseDTO} and {@link Message} which is restored from the
+     * DTO.
      */
     @Test
     public void testMessageFromDTO() throws Exception, DTOException {

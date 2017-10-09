@@ -88,7 +88,8 @@ public class Message {
 
         Message message = (Message) o;
 
-        return id == message.id && (text != null ? text.equals(message.text) : message.text == null)
+        return id == message.id
+            && (text != null ? text.equals(message.text) : message.text == null)
             && (chatId != null ? chatId.equals(message.chatId) : message.chatId == null);
     }
 

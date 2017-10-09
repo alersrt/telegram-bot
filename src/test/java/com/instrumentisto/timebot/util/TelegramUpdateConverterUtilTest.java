@@ -28,9 +28,9 @@ public class TelegramUpdateConverterUtilTest {
     }
 
     /**
-     * Test for {@code toDTO()} method. Here is commits check about saving {@link Update} object
-     * to {@link BaseDTO}. Converted DTO must be not null, and fields stored in must be equals to
-     * the same fields in update.
+     * Test for {@code toDTO()} method. Here is commits check about saving
+     * {@link Update} object to {@link BaseDTO}. Converted DTO must be not null,
+     * and fields stored in must be equals to the same fields in update.
      */
     @Test
     public void testUpdateToDTO() throws Exception {

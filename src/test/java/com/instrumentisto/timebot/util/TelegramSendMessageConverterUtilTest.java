@@ -33,9 +33,9 @@ public class TelegramSendMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code fromDTO()} method. Here is commits check about restoring {@link SendMessage}
-     * object from {@link BaseDTO} Restored object must be not null and its fields must be equals to
-     * fields stored in DTO.
+     * Test for {@code fromDTO()} method. Here is commits check about restoring
+     * {@link SendMessage} object from {@link BaseDTO} Restored object must be
+     * not null and its fields must be equals to fields stored in DTO.
      */
     @Test
     public void testSendMessageFromDTO() throws Exception, DTOException {
@@ -48,6 +48,7 @@ public class TelegramSendMessageConverterUtilTest {
         SendMessage sendMessage2 = converterUtil.fromDTO(baseDTO);
 
         Assert.assertNotNull(sendMessage2);
-        Assert.assertEquals(sendMessage1.getParameters(), sendMessage2.getParameters());
+        Assert.assertEquals(
+            sendMessage1.getParameters(), sendMessage2.getParameters());
     }
 }
