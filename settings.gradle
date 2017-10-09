@@ -23,9 +23,11 @@ gradle.ext.jtbaVersion = '3.3.0'
 // spring-boot version
 gradle.ext.sbVersion = '1.5.7.RELEASE'
 
-// JUnit bersion
+// JUnit version
 gradle.ext.junitVersion = '4.12'
 
+// Mockito version
+gradle.ext.mockitoVersion = '2.10.0'
 
 
 

@@ -1,10 +1,11 @@
 package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
-import com.instrumentisto.timebot.exception.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOException;
 
 /**
- * Util interface is describing classes which converts object to|from {@link BaseDTO}.
+ * Util interface is describing classes which converts object to|from
+ * {@link BaseDTO}.
  *
  * @param <T> class to|from which commit converting.
  */
@@ -25,5 +26,4 @@ public interface ConverterUtil<T> {
      * @return {@link T} value.
      */
     T fromDTO(BaseDTO baseDto) throws DTOException;
-
 }
