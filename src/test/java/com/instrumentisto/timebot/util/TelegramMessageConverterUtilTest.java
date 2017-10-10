@@ -2,7 +2,7 @@ package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.entity.Message;
-import com.instrumentisto.timebot.exception.DTO.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,12 +23,15 @@ public class TelegramMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code toDTO()} method. Here is expects equality between fields
-     * of original {@link Message} and {@link BaseDTO} to which original is
-     * converted.
+     * Test for {@code toDTO()} method.
+     *
+     * Checks assertions:
+     * 1. Returned {@link BaseDTO} must not be null;
+     * 2. Fields of {@link BaseDTO} must be equals to fields of {@link Message}.
      */
     @Test
-    public void testMessageToDTO() throws Exception, DTOException {
+    public void testMessageToDTO()
+        throws Exception, DTOConversionIsNotPossible {
         Message message = new Message();
         message.setText("test");
         message.setChatId("1L");
@@ -42,12 +45,15 @@ public class TelegramMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code fromDTO()} method. Here is expects equality between
-     * fields of {@link BaseDTO} and {@link Message} which is restored from the
-     * DTO.
+     * Test for {@code fromDTO()} method.
+     *
+     * Checks assertions:
+     * 1. Returned {@link Message} must not be null;
+     * 2. Fields of {@link Message} must be equals to fields of {@link BaseDTO}.
      */
     @Test
-    public void testMessageFromDTO() throws Exception, DTOException {
+    public void testMessageFromDTO()
+        throws Exception, DTOConversionIsNotPossible {
         Message message1 = new Message();
         message1.setText("test");
         message1.setChatId("1L");

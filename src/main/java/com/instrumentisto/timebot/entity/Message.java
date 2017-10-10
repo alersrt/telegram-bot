@@ -90,7 +90,8 @@ public class Message {
 
         return id == message.id
             && (text != null ? text.equals(message.text) : message.text == null)
-            && (chatId != null ? chatId.equals(message.chatId) : message.chatId == null);
+            && (chatId != null ? chatId.equals(message.chatId)
+            : message.chatId == null);
     }
 
     /**

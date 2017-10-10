@@ -9,7 +9,12 @@ import org.junit.Test;
 public class MessageTest {
 
     /**
-     * Test getter and setter for {@code id} field.
+     * Test getter and setter for {@code id} field of {@link Message}.
+     *
+     * Checks assertions:
+     * 1. Id of new {@link Message} must be equals to 0;
+     * 2. Returned value for message which have id equals to 1, must be equals
+     * to 1.
      */
     @Test
     public void testGetAndSetForId() throws Exception {
@@ -23,7 +28,12 @@ public class MessageTest {
     }
 
     /**
-     * Test getter and setter for {@code text} field.
+     * Test getter and setter for {@code text} field of {@link Message}.
+     *
+     * Checks assertions:
+     * 1. {@code text} field of new message must be equals to {@code null};
+     * 2. Returned value for message which have {@code text} field equals to
+     * {@code "test"}, must be equals to {@code "test"}.
      */
     @Test
     public void testGetAndSetForText() throws Exception {
@@ -37,7 +47,12 @@ public class MessageTest {
     }
 
     /**
-     * Test getter and setter for {@code chatId} field.
+     * Test getter and setter for {@code chatId} field of {@link Message}.
+     *
+     * Checks assertions:
+     * 1. {@code chatId} field of new object must be {@code null};
+     * 2. Returned value for message which have {@code chatId} field equals to
+     * {@code "1L"}, must be equals to {@code "1L"}.
      */
     @Test
     public void testGetAndSetForChatId() throws Exception {
@@ -51,7 +66,18 @@ public class MessageTest {
     }
 
     /**
-     * Test for {@code equals()} and {@code hashCode()} methods.
+     * Test for {@code equals()} and {@code hashCode()} methods for {@link
+     * Message}.
+     *
+     * Checks assertions:
+     * 1. Clear objects must be equals;
+     * 2. Hashcodes of clear objects must be equals;
+     * 3. Identical objects must be equals;
+     * 4. Hashcodes of identical objects must be equals;
+     * 5. Different objects must not be equals;
+     * 6. Hashcode of different objects must not be equals;
+     * 7. Object must not be equals to {@code null};
+     * 8. Object must be equals to itself.
      */
     @Test
     public void testEqualsAndHashCode() {
@@ -86,6 +112,7 @@ public class MessageTest {
             message1.hashCode() == message2.hashCode());
 
         Assert.assertFalse("Test equals() for null", message1.equals(null));
-        Assert.assertTrue("Test equals() for the same object", message1.equals(message1));
+        Assert.assertTrue("Test equals() for the same object",
+            message1.equals(message1));
     }
 }

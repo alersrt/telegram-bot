@@ -1,7 +1,7 @@
 package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
-import com.instrumentisto.timebot.exception.DTO.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,22 +23,28 @@ public class TelegramSendMessageConverterUtilTest {
     }
 
     /**
-     * Test for {@code toDTO()} method. Here is expects {@link DTOException}.
+     * Test for {@code toDTO()} method. Here is expects {@link
+     * DTOConversionIsNotPossible}.
      */
-    @Test(expected = DTOException.class)
-    public void testSendMessageToDTO() throws Exception, DTOException {
+    @Test(expected = DTOConversionIsNotPossible.class)
+    public void testSendMessageToDTO()
+        throws Exception, DTOConversionIsNotPossible {
         SendMessage sendMessage = new SendMessage(1, "test");
 
         BaseDTO baseDTO = converterUtil.toDTO(sendMessage);
     }
 
     /**
-     * Test for {@code fromDTO()} method. Here is commits check about restoring
-     * {@link SendMessage} object from {@link BaseDTO} Restored object must be
-     * not null and its fields must be equals to fields stored in DTO.
+     * Test for {@code fromDTO()} method.
+     *
+     * Checks assertions:
+     * 1. Returned {@link SendMessage} must not be {@code null};
+     * 2. Fields of restored {@link SendMessage} must be equals to fields of
+     * {@link BaseDTO} from which we extract {@link SendMessage}.
      */
     @Test
-    public void testSendMessageFromDTO() throws Exception, DTOException {
+    public void testSendMessageFromDTO()
+        throws Exception, DTOConversionIsNotPossible {
         SendMessage sendMessage1 = new SendMessage(1, "test");
 
         BaseDTO baseDTO = new BaseDTO();

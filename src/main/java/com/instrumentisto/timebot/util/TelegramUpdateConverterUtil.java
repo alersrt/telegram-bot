@@ -1,7 +1,7 @@
 package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
-import com.instrumentisto.timebot.exception.DTO.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
      * {@inheritDoc}
      */
     @Override
-    public Update fromDTO(BaseDTO baseDto) throws DTOException {
-        throw new DTOException();
+    public Update fromDTO(BaseDTO baseDto) throws DTOConversionIsNotPossible {
+        throw new DTOConversionIsNotPossible();
     }
 }

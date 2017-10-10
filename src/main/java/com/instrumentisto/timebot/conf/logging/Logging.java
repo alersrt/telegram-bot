@@ -11,5 +11,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Logging {
+
+    /**
+     * Construction which determines value of field on which {@link Logging}
+     * annotation will placed.
+     *
+     * @return {@link String} value.
+     */
     String value() default "";
 }

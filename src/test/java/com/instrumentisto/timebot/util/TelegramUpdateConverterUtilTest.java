@@ -4,7 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
-import com.instrumentisto.timebot.exception.DTO.DTOException;
+import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
@@ -28,9 +28,12 @@ public class TelegramUpdateConverterUtilTest {
     }
 
     /**
-     * Test for {@code toDTO()} method. Here is commits check about saving
-     * {@link Update} object to {@link BaseDTO}. Converted DTO must be not null,
-     * and fields stored in must be equals to the same fields in update.
+     * Test for {@code toDTO()} method.
+     *
+     * Checks assertions:
+     * 1. Returned {@link BaseDTO} must not be {@code null};
+     * 2. Stored fields of returned {@link BaseDTO} must be equals to field of
+     * original {@link Update}.
      */
     @Test
     public void testUpdateToDTO() throws Exception {
@@ -50,10 +53,12 @@ public class TelegramUpdateConverterUtilTest {
     }
 
     /**
-     * Test for {@code fromDTO()} method. Here is expects {@link DTOException}.
+     * Test for {@code fromDTO()} method. Here is expects {@link
+     * DTOConversionIsNotPossible}.
      */
-    @Test(expected = DTOException.class)
-    public void testUpdateFromDTO() throws Exception, DTOException {
+    @Test(expected = DTOConversionIsNotPossible.class)
+    public void testUpdateFromDTO()
+        throws Exception, DTOConversionIsNotPossible {
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", "test");
         baseDTO.addValueOfField("chatId", 1);

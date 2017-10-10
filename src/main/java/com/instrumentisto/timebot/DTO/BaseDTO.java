@@ -1,11 +1,13 @@
 package com.instrumentisto.timebot.DTO;
 
+import com.instrumentisto.timebot.exception.DTO.DTOFieldDoesNotExist;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Describes DTO entity which will used for transfer API or {@link
- * com.instrumentisto.timebot.entity.Message} objects between Controller and Handler layers.
+ * com.instrumentisto.timebot.entity.Message} objects between Controller and
+ * Handler layers.
  */
 public class BaseDTO {
 
@@ -17,7 +19,7 @@ public class BaseDTO {
     /**
      * Adds field which must be save.
      *
-     *  @param fieldName name of saved object's field.
+     * @param fieldName name of saved object's field.
      * @param fieldValue value of saved object's field.
      */
     public void addValueOfField(String fieldName, Object fieldValue) {
@@ -30,8 +32,15 @@ public class BaseDTO {
      * @param fieldName name of field which value have to get.
      * @return {@link Object} value.
      */
-    public Object getValueOfField(String fieldName) {
-        return map.get(fieldName);
+    public Object getValueOfField(String fieldName)
+        throws DTOFieldDoesNotExist {
+        Object value = map.get(fieldName);
+
+        if (value == null) {
+            throw new DTOFieldDoesNotExist();
+        }
+
+        return value;
     }
 
     /**
