@@ -16,7 +16,7 @@ public class TelegramMessageQueryTimeServiceTest {
      * Test for {@code queryProcessor(Message message)} method.
      *
      * Checks assertions:
-     * 1. Output {@link Message} must not be null.
+     * 1. Output {@link Message} must not be null;
      * 2. Output message must be equals to another message, text field of which
      * was sets of hands.
      */
