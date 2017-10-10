@@ -22,7 +22,7 @@ public interface MessageTransferService {
      * @param id value of ID message which need to get.
      * @return {@link Message} value.
      */
-    Message findById(long id);
+    Message findById(int id);
 
     /**
      * Returns list of all {@link Message} objects from repository.

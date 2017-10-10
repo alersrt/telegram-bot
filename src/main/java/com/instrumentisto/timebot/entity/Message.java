@@ -25,7 +25,7 @@ public class Message {
      *
      * @return {@link long} value.
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
