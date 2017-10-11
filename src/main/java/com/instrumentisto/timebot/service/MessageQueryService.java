@@ -11,6 +11,7 @@ public interface MessageQueryService {
      * Takes message, ejects ID of recipient and forms answer.
      *
      * @param message message which need to process.
+     * @return {@link Message} value.
      */
     Message queryProcessor(Message message);
 }

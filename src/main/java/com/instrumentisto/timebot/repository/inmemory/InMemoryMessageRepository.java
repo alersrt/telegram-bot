@@ -6,10 +6,12 @@ import com.instrumentisto.timebot.exception.repository.InMemoryRepositorySaveExc
 import com.instrumentisto.timebot.repository.MessageRepository;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * Implementation of {@link MessageRepository}.
  */
+@Component
 public class InMemoryMessageRepository implements MessageRepository {
 
     /**

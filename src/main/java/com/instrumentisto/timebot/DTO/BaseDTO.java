@@ -31,6 +31,8 @@ public class BaseDTO {
      *
      * @param fieldName name of field which value have to get.
      * @return {@link Object} value.
+     * @throws DTOFieldDoesNotExist commits during trying of getting nonexistent
+     * field of DTO.
      */
     public Object getValueOfField(String fieldName)
         throws DTOFieldDoesNotExist {

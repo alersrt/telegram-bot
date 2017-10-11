@@ -15,6 +15,8 @@ public interface MessageRepository {
      *
      * @param id id by which you need to find message.
      * @return {@link Message} value.
+     * @throws InMemoryRepositoryMessageDoesNotExist commits during trying of
+     * getting nonexistent {@link Message}.
      */
     Message findById(int id) throws InMemoryRepositoryMessageDoesNotExist;
 
@@ -22,6 +24,8 @@ public interface MessageRepository {
      * Saves message in to repository.
      *
      * @param message message which you need to save in to repository.
+     * @throws InMemoryRepositorySaveException commits when something wrong with
+     * process of saving.
      */
     void saveMessage(Message message) throws InMemoryRepositorySaveException;
 
