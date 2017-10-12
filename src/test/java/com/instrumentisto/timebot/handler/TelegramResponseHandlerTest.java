@@ -75,9 +75,7 @@ public class TelegramResponseHandlerTest {
             return messages;
         }).when(messageTransferService).clearRepository();
 
-        doAnswer(invocation -> {
-            return messages;
-        }).when(messageTransferService).getMessages();
+        when(messageTransferService.getMessages()).thenReturn(messages);
 
         List<BaseDTO> retrievedList = responseHandler.handleResponse();
 

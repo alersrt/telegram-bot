@@ -42,7 +42,21 @@ public class TelegramRequestHandlerTest {
      * RequestHandler}.
      */
     @Mock
-    private MessageQueryService timeQueryService;
+    private MessageQueryService timeService;
+
+    /**
+     * Mock {@link MessageQueryService} as dependence for tested {@link
+     * RequestHandler}.
+     */
+    @Mock
+    private MessageQueryService startService;
+
+    /**
+     * Mock {@link MessageQueryService} as dependence for tested {@link
+     * RequestHandler}.
+     */
+    @Mock
+    private MessageQueryService defaultService;
 
     /**
      * Mock of {@link RequestHandler} field which initialized of {@link
@@ -59,30 +73,96 @@ public class TelegramRequestHandlerTest {
      * 2. Text of this message must be equals to {@code "datetime"}.
      */
     @Test
-    public void handleRequest() throws Exception {
+    public void handleRequest_timeCommand() throws Exception {
         List<Message> messages = new ArrayList<>();
 
-        Message message = mock(Message.class);
-        when(message.getText()).thenReturn("t1");
-
         BaseDTO baseDTO = mock(BaseDTO.class);
+        Message message = mock(Message.class);
+        when(message.getText()).thenReturn("/time");
 
         when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
+
+        doAnswer(invocation -> {
+            when(message.getText()).thenReturn("datetime");
+            return message;
+        }).when(timeService).queryProcessor(message);
 
         doAnswer(invocation -> {
             messages.add(invocation.getArgument(0));
             return messages;
         }).when(messageTransferService).saveMessage(message);
 
-        doAnswer(invocation -> {
-            when(message.getText()).thenReturn("datetime");
-            return message;
-        }).when(timeQueryService).queryProcessor(message);
-
         requestHandler.handleRequest(baseDTO);
 
         Assert.assertNotNull(messages.get(0));
         Assert.assertEquals("datetime", messages.get(0).getText());
     }
+
+    /**
+     * Test for {@code handleRequest(BaseDTO baseDTO)} method.
+     *
+     * Checks assertions:
+     * 1. Message which stored in repo must not be null;
+     * 2. Text of this message must be equals to {@code "hello"}.
+     */
+    @Test
+    public void handleRequest_startCommand() throws Exception {
+        List<Message> messages = new ArrayList<>();
+
+        BaseDTO baseDTO = mock(BaseDTO.class);
+        Message message = mock(Message.class);
+        when(message.getText()).thenReturn("/start");
+
+        when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
+
+        doAnswer(invocation -> {
+            when(message.getText()).thenReturn("hello");
+            return message;
+        }).when(startService).queryProcessor(message);
+
+        doAnswer(invocation -> {
+            messages.add(invocation.getArgument(0));
+            return messages;
+        }).when(messageTransferService).saveMessage(message);
+
+        requestHandler.handleRequest(baseDTO);
+
+        Assert.assertNotNull(messages.get(0));
+        Assert.assertEquals("hello", messages.get(0).getText());
+    }
+
+    /**
+     * Test for {@code handleRequest(BaseDTO baseDTO)} method.
+     *
+     * Checks assertions:
+     * 1. Message which stored in repo must not be null;
+     * 2. Text of this message must be equals to {@code "default"}.
+     */
+    @Test
+    public void handleRequest_defaultCommand() throws Exception {
+        List<Message> messages = new ArrayList<>();
+
+        BaseDTO baseDTO = mock(BaseDTO.class);
+        Message message = mock(Message.class);
+        when(message.getText()).thenReturn("default");
+
+        when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
+
+        doAnswer(invocation -> {
+            when(message.getText()).thenReturn("default");
+            return message;
+        }).when(defaultService).queryProcessor(message);
+
+        doAnswer(invocation -> {
+            messages.add(invocation.getArgument(0));
+            return messages;
+        }).when(messageTransferService).saveMessage(message);
+
+        requestHandler.handleRequest(baseDTO);
+
+        Assert.assertNotNull(messages.get(0));
+        Assert.assertEquals("default", messages.get(0).getText());
+    }
+
 
 }

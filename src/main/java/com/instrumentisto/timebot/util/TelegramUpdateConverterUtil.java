@@ -19,6 +19,9 @@ public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", update.message().text());
         baseDTO.addValueOfField("chatId", update.message().from().id());
+        baseDTO.addValueOfField("username",
+            update.message().from().username() != null ? update.message()
+                .from().username() : "user which has no username");
         return baseDTO;
     }
 

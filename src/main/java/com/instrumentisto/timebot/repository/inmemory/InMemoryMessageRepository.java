@@ -17,12 +17,12 @@ public class InMemoryMessageRepository implements MessageRepository {
     /**
      * Sequencer for ID of message.
      */
-    private static int idSequencer;
+    private int idSequencer;
 
     /**
      * Collection in which repository stored.
      */
-    private static List<Message> repository;
+    private List<Message> repository;
 
     /**
      * Getter for {@code idSequencer} field.
@@ -39,7 +39,7 @@ public class InMemoryMessageRepository implements MessageRepository {
      * @param idSequencer value to which need to set {@code idSequencer} field.
      */
     public void setIdSequencer(int idSequencer) {
-        InMemoryMessageRepository.idSequencer = idSequencer;
+        this.idSequencer = idSequencer;
     }
 
     /**
@@ -57,7 +57,7 @@ public class InMemoryMessageRepository implements MessageRepository {
      * @param repository value to which need to set {@code repository} field.
      */
     public void setRepository(List<Message> repository) {
-        InMemoryMessageRepository.repository = repository;
+        this.repository = repository;
     }
 
     /**

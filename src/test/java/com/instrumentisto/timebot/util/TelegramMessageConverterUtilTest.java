@@ -57,10 +57,12 @@ public class TelegramMessageConverterUtilTest {
         Message message1 = new Message();
         message1.setText("test");
         message1.setChatId("1L");
+        message1.setUsername("username");
 
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", "test");
         baseDTO.addValueOfField("chatId", "1L");
+        baseDTO.addValueOfField("username", "username");
         Message message2 = converterUtil.fromDTO(baseDTO);
 
         Assert.assertNotNull(message2);

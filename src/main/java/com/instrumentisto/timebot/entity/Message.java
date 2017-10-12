@@ -21,6 +21,11 @@ public class Message {
     private String chatId;
 
     /**
+     * Field which contains Username of recipient.
+     */
+    private String username;
+
+    /**
      * Gets value of {@code id} field.
      *
      * @return {@link long} value.
@@ -32,7 +37,7 @@ public class Message {
     /**
      * Sets {@code id} field.
      *
-     * @param id is value to which need to set {@code id} field.
+     * @param id value to which need to set {@code id} field.
      */
     public void setId(int id) {
         this.id = id;
@@ -50,7 +55,7 @@ public class Message {
     /**
      * Sets {@code text} field.
      *
-     * @param text is value to which need to set {@code text} field.
+     * @param text value to which need to set {@code text} field.
      */
     public void setText(String text) {
         this.text = text;
@@ -68,10 +73,28 @@ public class Message {
     /**
      * Sets {@code chatId} field.
      *
-     * @param chatId is value to which need to set {@code chatId} field.
+     * @param chatId value to which need to set {@code chatId} field.
      */
     public void setChatId(String chatId) {
         this.chatId = chatId;
+    }
+
+    /**
+     * Gets value of {@code username} field.
+     *
+     * @return {@link String} value.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Sets {@code username} field.
+     *
+     * @param username value to which need to set {@code username} field.
+     */
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**

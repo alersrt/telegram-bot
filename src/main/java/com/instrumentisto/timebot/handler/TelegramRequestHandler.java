@@ -33,11 +33,26 @@ public class TelegramRequestHandler implements RequestHandler {
     private MessageTransferService messageTransferService;
 
     /**
-     * {@link MessageQueryService} which process concrete query.
+     * {@link MessageQueryService} which process "time" query.
      */
     @Autowired
     @Qualifier("telegramMessageQueryTimeService")
     private MessageQueryService timeService;
+
+    /**
+     * {@link MessageQueryService} which process "start" query.
+     */
+    @Autowired
+    @Qualifier("telegramMessageQueryStartService")
+    private MessageQueryService startService;
+
+    /**
+     * {@link MessageQueryService} which process any queries except those which
+     * is determined.
+     */
+    @Autowired
+    @Qualifier("telegramMessageQueryDefaultService")
+    private MessageQueryService defaultService;
 
     /**
      * {@inheritDoc}
@@ -46,8 +61,22 @@ public class TelegramRequestHandler implements RequestHandler {
     public void handleRequest(BaseDTO baseDTO)
         throws DTOConversionIsNotPossible, DTOFieldDoesNotExist,
         InMemoryRepositorySaveException {
-        Message message = converterUtil.fromDTO(baseDTO);
 
-        messageTransferService.saveMessage(timeService.queryProcessor(message));
+        Message message = converterUtil.fromDTO(baseDTO);
+        switch (message.getText()) {
+            case "/time":
+                messageTransferService
+                    .saveMessage(timeService.queryProcessor(message));
+                break;
+            case "/start":
+                messageTransferService
+                    .saveMessage(startService.queryProcessor(message));
+                break;
+            default:
+                messageTransferService
+                    .saveMessage(defaultService.queryProcessor(message));
+                break;
+        }
+
     }
 }

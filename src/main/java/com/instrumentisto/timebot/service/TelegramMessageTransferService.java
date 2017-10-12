@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class TelegramMessageTransferService implements MessageTransferService {
 
     @Autowired
-    MessageRepository messageRepository;
+    private MessageRepository messageRepository;
 
     /**
      * {@inheritDoc}

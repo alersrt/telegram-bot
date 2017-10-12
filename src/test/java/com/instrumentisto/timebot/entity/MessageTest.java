@@ -66,6 +66,25 @@ public class MessageTest {
     }
 
     /**
+     * Test getter and setter for {@code chatId} field of {@link Message}.
+     *
+     * Checks assertions:
+     * 1. {@code username} field of new object must be null;
+     * 2. Returned value for message which have {@code username} field equals to
+     * {@code "username"}, must be equals to {@code "username"}.
+     */
+    @Test
+    public void testGetAndSetForUsername() throws Exception {
+        Message message = new Message();
+
+        Assert.assertNull(message.getUsername());
+
+        message.setUsername("username");
+
+        Assert.assertEquals("username", message.getUsername());
+    }
+
+    /**
      * Test for {@code equals()} and {@code hashCode()} methods for {@link
      * Message}.
      *

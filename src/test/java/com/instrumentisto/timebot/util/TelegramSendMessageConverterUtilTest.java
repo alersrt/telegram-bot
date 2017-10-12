@@ -31,7 +31,7 @@ public class TelegramSendMessageConverterUtilTest {
         throws Exception, DTOConversionIsNotPossible {
         SendMessage sendMessage = new SendMessage(1, "test");
 
-        BaseDTO baseDTO = converterUtil.toDTO(sendMessage);
+        converterUtil.toDTO(sendMessage);
     }
 
     /**

@@ -20,6 +20,7 @@ public class TelegramMessageConverterUtil implements ConverterUtil<Message> {
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", message.getText());
         baseDTO.addValueOfField("chatId", message.getChatId());
+        baseDTO.addValueOfField("username", message.getUsername());
         return baseDTO;
     }
 
@@ -30,8 +31,9 @@ public class TelegramMessageConverterUtil implements ConverterUtil<Message> {
     public Message fromDTO(BaseDTO baseDto)
         throws DTOConversionIsNotPossible, DTOFieldDoesNotExist {
         Message message = new Message();
-        message.setText((String) baseDto.getValueOfField("text"));
-        message.setChatId((String) baseDto.getValueOfField("chatId"));
+        message.setText(baseDto.getValueOfField("text").toString());
+        message.setChatId(baseDto.getValueOfField("chatId").toString());
+        message.setUsername(baseDto.getValueOfField("username").toString());
         return message;
     }
 }
