@@ -18,7 +18,7 @@ public class TelegramConfig {
      * Token's value which injects from properties file.
      */
     @Value("${bot.token}")
-    String botToken;
+    private String botToken;
 
     /**
      * Returns {@link TelegramBot} bean for our token.
