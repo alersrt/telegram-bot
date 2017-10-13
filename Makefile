@@ -29,7 +29,6 @@ ifeq ($(del),yes)
 	git branch -d orig-$(CURRENT_BRANCH)
 endif
 
-.PHONY: squash
 
 ###########################
 ### Docker section
@@ -37,6 +36,14 @@ endif
 
 build:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-	gradle gradle clean build -x test
+	gradle:alpine gradle clean build -x test
 
-.PHONY: build
+
+# run command
+
+run: | build
+	docker run --rm -v ${PWD}:/usr/myapp -w /usr/myapp openjdk:alpine \
+	java -jar build/libs/time-api-1.0.jar
+
+
+.PHONY: run build squash

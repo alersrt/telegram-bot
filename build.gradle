@@ -19,7 +19,7 @@ apply plugin: 'templates'
 apply plugin: 'webapp-templates'
 
 group 'com.instrumentisto'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 sourceCompatibility = 1.8
 
