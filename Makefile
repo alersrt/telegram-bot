@@ -1,7 +1,9 @@
+###########################
+### Git Section
+###########################
+
 MAINLINE_BRANCH := dev
 CURRENT_BRANCH := $(shell git branch | grep \* | cut -d ' ' -f2)
-
-
 
 # Squash changes of the current Git branch onto another Git branch.
 #
@@ -27,6 +29,14 @@ ifeq ($(del),yes)
 	git branch -d orig-$(CURRENT_BRANCH)
 endif
 
-
-
 .PHONY: squash
+
+###########################
+### Docker section
+###########################
+
+build:
+	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
+	gradle gradle clean build -x test
+
+.PHONY: build

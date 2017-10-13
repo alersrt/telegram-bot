@@ -72,6 +72,13 @@ For build the application with Gradle you need to run this command in console (b
 $ gradle build
 ```
 
+Also you can build the application with Gradle via Docker's container:
+```bash
+$ make build
+```
+But you must be sure that your user can to read/write in to `/var/run/docker.sock` (or any because it depends from your distro) it reaching of user's adding to `docker` group.
+
+
 ### Run Application
 
 For running of the application you need to type and enter this command (be sure that you are in the root directory of the project):
