@@ -50,8 +50,34 @@ Telegram Time Bot
 - Вернуте пользователю локальное время с учетом его местоположения и указанием [Time Zone][14].
 
 
+### Build Application
 
+Before build you have to place `telegramBot_dev.properties` in to `src/main/resources/` directory.
+This file must contains the following lines:
+```bash
+# Token for bot's authorizing (https://core.telegram.org/bots/api#authorizing-your-bot).
+bot.token=[Telegram Bot API token]
 
+# Datetime format (https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html)
+bot.datetime.format="yyyy-MM-dd HH:mm:ss.SSS"
+
+# Timeout pooling queries for bot
+bot.timeout=1000
+```
+
+You can read about datetime format [there][15].
+
+For build the application with Gradle you need to run this command in console (be sure that you are in the root directory of the project):
+```bash
+$ gradle build
+```
+
+### Run Application
+
+For running of the application you need to type and enter this command (be sure that you are in the root directory of the project):
+```bash
+$ gradle bootRun
+```
 
 [1]: http://mediatoolbox.ru/blog/botyi-telegram-vsyo-chto-vyi-hoteli-pro-nih-sprosit/
 [2]: https://git.instrumentisto.com/common/documentation/blob/master/developers/workflow.md#issue-lifecycle
@@ -67,3 +93,4 @@ Telegram Time Bot
 [12]: https://ru.wikipedia.org/wiki/Make
 [13]: https://developers.google.com/maps/documentation/timezone/intro?hl=ru
 [14]: https://en.wikipedia.org/wiki/Time_zone
+[15]: https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
