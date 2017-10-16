@@ -34,16 +34,20 @@ endif
 ### Docker section
 ###########################
 
+# build command
 build:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
 	gradle:alpine gradle clean build -x test
 
-
 # run command
-
 run: | build
 	docker run --rm -v ${PWD}:/usr/myapp -w /usr/myapp openjdk:alpine \
 	java -jar build/libs/time-api-1.0.jar
 
+# docs command
+docs:
+	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
+	gradle:alpine gradle clean javadoc
 
-.PHONY: run build squash
+
+.PHONY: docs run build squash

@@ -86,6 +86,20 @@ For running of the application you need to type and enter this command (be sure 
 $ gradle bootRun
 ```
 
+Also you can run the application with Gradle via Docker's container:
+```bash
+$ make run
+```
+
+### Generate html-documentation
+
+For generate of JavaDoc via Docker-container you need to run the next command:
+```bash
+$ make docs
+```
+
+Generated documentation will be available by this path: `<project dir>/build/docs/`.
+
 [1]: http://mediatoolbox.ru/blog/botyi-telegram-vsyo-chto-vyi-hoteli-pro-nih-sprosit/
 [2]: https://git.instrumentisto.com/common/documentation/blob/master/developers/workflow.md#issue-lifecycle
 [3]: https://git.instrumentisto.com/common/documentation/blob/master/developers/codestyle.md#java
