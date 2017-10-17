@@ -80,7 +80,6 @@ public class BaseDTOTest {
             "Test hashCode() for different objects",
             baseDTO1.hashCode() == baseDTO2.hashCode());
 
-        Assert.assertFalse("Test equals() for null", baseDTO1.equals(null));
         Assert.assertTrue("Test equals() for the same object",
             baseDTO1.equals(baseDTO1));
 

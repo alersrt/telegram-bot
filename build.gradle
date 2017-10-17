@@ -6,12 +6,12 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: "jacoco"
+apply plugin: 'pmd'
 
 group 'com.instrumentisto'
 version '1.0'
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 // Global repositories
 repositories {
@@ -58,4 +58,35 @@ consoleReporter {
     jacoco.thresholdFine 90
     jacoco.thresholdError 50
     jacoco.failIfLessThanThresholdError true
+}
+
+// Settings for PMD. Names of rulesets was taken from there:
+// https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/rulesets/java
+pmd {
+    consoleOutput true
+    ignoreFailures true
+    rulePriority 2
+    ruleSets = [
+            'java-basic',
+            'java-braces',
+            'java-j2ee',
+            'java-junit',
+            'java-imports',
+            'java-unnecessary',
+            'java-unusedcode',
+            'java-javabeans',
+            'java-design',
+            'java-optimizations',
+            'java-empty',
+            'java-codesize',
+            'java-comments',
+            'java-coupling',
+            'java-clone',
+            'java-controversial',
+            'java-finalizers',
+            'java-strictexception',
+            'java-strings',
+            'java-sunsecure',
+            'java-typeresolution'
+    ]
 }

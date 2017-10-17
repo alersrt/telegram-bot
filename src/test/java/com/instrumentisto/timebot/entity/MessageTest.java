@@ -130,7 +130,6 @@ public class MessageTest {
         Assert.assertFalse("Test hashCode() for different objects",
             message1.hashCode() == message2.hashCode());
 
-        Assert.assertFalse("Test equals() for null", message1.equals(null));
         Assert.assertTrue("Test equals() for the same object",
             message1.equals(message1));
     }

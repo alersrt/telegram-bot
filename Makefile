@@ -53,5 +53,9 @@ test:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
     gradle:alpine gradle clean test jacocoTestReport jacocoTestCoverageVerification
 
+# lint command
+lint:
+	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
+    gradle:alpine gradle clean pmdMain pmdTest
 
-.PHONY: docs test run build squash
+.PHONY: docs test lint run build squash

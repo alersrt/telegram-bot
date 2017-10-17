@@ -103,6 +103,13 @@ Also you can run the application with Gradle via Docker's container:
 ```bash
 $ make run
 ```
+Reports about code coverage and tests result are available by this paths: 
+```
+# code coverage
+<project dir>/build/reports/jacoco
+# test results
+<project dir>/build/reports/tests
+```
 
 ### Generate html-documentation
 
@@ -110,8 +117,15 @@ For generate of JavaDoc via Docker-container you need to run the next command:
 ```bash
 $ make docs
 ```
-
 Generated documentation will be available by this path: `<project dir>/build/docs/`.
+
+### Linter
+
+You can check your code with help of [PMD code analyzer][16] via docker-container. For this needs type the next command:
+```bash
+$ make lint
+```
+Also, this analyzer generates report which available by this path: `<project dir>/build/reports/pmd`
 
 [1]: http://mediatoolbox.ru/blog/botyi-telegram-vsyo-chto-vyi-hoteli-pro-nih-sprosit/
 [2]: https://git.instrumentisto.com/common/documentation/blob/master/developers/workflow.md#issue-lifecycle
@@ -128,3 +142,4 @@ Generated documentation will be available by this path: `<project dir>/build/doc
 [13]: https://developers.google.com/maps/documentation/timezone/intro?hl=ru
 [14]: https://en.wikipedia.org/wiki/Time_zone
 [15]: https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+[16]: https://pmd.github.io/
