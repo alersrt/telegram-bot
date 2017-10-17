@@ -29,7 +29,6 @@ ifeq ($(del),yes)
 	git branch -d orig-$(CURRENT_BRANCH)
 endif
 
-
 ###########################
 ### Docker section
 ###########################
@@ -49,5 +48,10 @@ docs:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
 	gradle:alpine gradle clean javadoc
 
+# test command
+test:
+	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
+    gradle:alpine gradle clean test jacocoTestReport jacocoTestCoverageVerification
 
-.PHONY: docs run build squash
+
+.PHONY: docs test run build squash

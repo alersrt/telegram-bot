@@ -1,27 +1,17 @@
-// Gradle scripts repositories and dependencies.
-buildscript {
-    repositories {
-        maven {
-            url 'http://dl.bintray.com/cjstehno/public'
-        }
-    }
-    dependencies {
-        classpath 'gradle-templates:gradle-templates:1.4.1'
-    }
-}
-
 plugins {
     id 'org.springframework.boot' version '1.5.7.RELEASE'
+    id "com.adarshr.test-logger" version "1.0.0"
+    id 'com.github.ksoichiro.console.reporter' version '0.5.0'
 }
 
 apply plugin: 'java'
-apply plugin: 'templates'
-apply plugin: 'webapp-templates'
+apply plugin: "jacoco"
 
 group 'com.instrumentisto'
 version '1.0'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 // Global repositories
 repositories {
@@ -35,21 +25,37 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: gradle.sbVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: gradle.sbVersion
-
     compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: gradle.jtbaVersion
 
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: gradle.junitVersion
     testCompile group: 'org.mockito', name: 'mockito-core', version: gradle.mockitoVersion
 }
 
+// Make jar file as executable
 springBoot {
     executable = true
 }
 
+// Set data of *.properties file from *.dev files
 processResources {
     include "**/telegramBot.properties.dev"
     rename {
         'telegramBot.properties'
     }
+}
+
+// Settings for JaCoCo report: enabled Html-report
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
+    }
+}
+
+// Settings for console-reporter: it throws failure if covering will be less than 50%
+consoleReporter {
+    jacoco.thresholdFine 90
+    jacoco.thresholdError 50
+    jacoco.failIfLessThanThresholdError true
 }

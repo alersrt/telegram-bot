@@ -85,6 +85,19 @@ For running of the application you need to type and enter this command (be sure 
 ```bash
 $ gradle bootRun
 ```
+Also you can run this application via docker-container. For this you have to run this command:
+```bash
+$ make run
+```
+It runs application via `openjdk:alpine` container.
+
+### Test Application
+
+For running of the tests for this application you should to run the next command:
+```bash
+$ make test
+```
+It runs tests, shows process of the testing and shows information about summary coverage at the end of the process.
 
 Also you can run the application with Gradle via Docker's container:
 ```bash
