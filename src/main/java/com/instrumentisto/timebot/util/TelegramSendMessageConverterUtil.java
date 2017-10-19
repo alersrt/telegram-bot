@@ -2,7 +2,6 @@ package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
-import com.instrumentisto.timebot.exception.DTO.DTOFieldDoesNotExist;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +16,7 @@ public class TelegramSendMessageConverterUtil implements
      * {@inheritDoc}
      */
     @Override
-    public BaseDTO toDTO(SendMessage sendMessage)
-        throws DTOConversionIsNotPossible {
+    public BaseDTO toDTO(SendMessage sendMessage) {
         throw new DTOConversionIsNotPossible();
     }
 
@@ -26,11 +24,9 @@ public class TelegramSendMessageConverterUtil implements
      * {@inheritDoc}
      */
     @Override
-    public SendMessage fromDTO(BaseDTO baseDto)
-        throws DTOConversionIsNotPossible, DTOFieldDoesNotExist {
-        SendMessage sendMessage = new SendMessage(
+    public SendMessage fromDTO(BaseDTO baseDto) {
+        return new SendMessage(
             baseDto.getValueOfField("chatId"),
             (String) baseDto.getValueOfField("text"));
-        return sendMessage;
     }
 }

@@ -27,8 +27,7 @@ public class TelegramSendMessageConverterUtilTest {
      * DTOConversionIsNotPossible}.
      */
     @Test(expected = DTOConversionIsNotPossible.class)
-    public void testSendMessageToDTO()
-        throws Exception, DTOConversionIsNotPossible {
+    public void testSendMessageToDTO() throws Exception {
         SendMessage sendMessage = new SendMessage(1, "test");
 
         converterUtil.toDTO(sendMessage);
@@ -43,8 +42,7 @@ public class TelegramSendMessageConverterUtilTest {
      * {@link BaseDTO} from which we extract {@link SendMessage}.
      */
     @Test
-    public void testSendMessageFromDTO()
-        throws Exception, DTOConversionIsNotPossible {
+    public void testSendMessageFromDTO() throws Exception {
         SendMessage sendMessage1 = new SendMessage(1, "test");
 
         BaseDTO baseDTO = new BaseDTO();

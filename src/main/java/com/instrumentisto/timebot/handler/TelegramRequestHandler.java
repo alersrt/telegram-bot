@@ -2,9 +2,6 @@ package com.instrumentisto.timebot.handler;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.entity.Message;
-import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
-import com.instrumentisto.timebot.exception.DTO.DTOFieldDoesNotExist;
-import com.instrumentisto.timebot.exception.repository.InMemoryRepositorySaveException;
 import com.instrumentisto.timebot.service.MessageQueryService;
 import com.instrumentisto.timebot.service.MessageTransferService;
 import com.instrumentisto.timebot.util.ConverterUtil;
@@ -58,9 +55,7 @@ public class TelegramRequestHandler implements RequestHandler {
      * {@inheritDoc}
      */
     @Override
-    public void handleRequest(BaseDTO baseDTO)
-        throws DTOConversionIsNotPossible, DTOFieldDoesNotExist,
-        InMemoryRepositorySaveException {
+    public void handleRequest(BaseDTO baseDTO) {
 
         Message message = converterUtil.fromDTO(baseDTO);
         switch (message.getText()) {

@@ -1,8 +1,6 @@
 package com.instrumentisto.timebot.service;
 
 import com.instrumentisto.timebot.entity.Message;
-import com.instrumentisto.timebot.exception.repository.InMemoryRepositoryMessageDoesNotExist;
-import com.instrumentisto.timebot.exception.repository.InMemoryRepositorySaveException;
 import com.instrumentisto.timebot.repository.MessageRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,7 @@ public class TelegramMessageTransferService implements MessageTransferService {
      * {@inheritDoc}
      */
     @Override
-    public void saveMessage(Message message)
-        throws InMemoryRepositorySaveException {
+    public void saveMessage(Message message) {
         messageRepository.saveMessage(message);
     }
 
@@ -30,8 +27,7 @@ public class TelegramMessageTransferService implements MessageTransferService {
      * {@inheritDoc}
      */
     @Override
-    public Message findById(int id)
-        throws InMemoryRepositoryMessageDoesNotExist {
+    public Message findById(int id) {
         return messageRepository.findById(id);
     }
 

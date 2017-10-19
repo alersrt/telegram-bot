@@ -95,7 +95,7 @@ public class MessageTest {
      * 4. Hashcodes of identical objects must be equals;
      * 5. Different objects must not be equals;
      * 6. Hashcode of different objects must not be equals;
-     * 7. Object must not be equals to {@code null};
+     * 7. Object must not be equals to object of another class;
      * 8. Object must be equals to itself.
      */
     @Test
@@ -130,6 +130,7 @@ public class MessageTest {
         Assert.assertFalse("Test hashCode() for different objects",
             message1.hashCode() == message2.hashCode());
 
+        Assert.assertFalse(message1.equals(new Object()));
         Assert.assertTrue("Test equals() for the same object",
             message1.equals(message1));
     }

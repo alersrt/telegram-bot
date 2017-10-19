@@ -59,8 +59,7 @@ public class TelegramUpdateConverterUtilTest {
      * DTOConversionIsNotPossible}.
      */
     @Test(expected = DTOConversionIsNotPossible.class)
-    public void testUpdateFromDTO()
-        throws Exception, DTOConversionIsNotPossible {
+    public void testUpdateFromDTO() throws Exception {
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", "test");
         baseDTO.addValueOfField("chatId", 1);

@@ -44,12 +44,22 @@ processResources {
     }
 }
 
-// Settings for JaCoCo report: enabled Html-report
+// Settings for JaCoCo report: enabled Html-report; excludes excess packages and classes from JaCoCo
 jacocoTestReport {
     reports {
         xml.enabled false
         csv.enabled false
         html.enabled true
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/conf/**',
+                    '**/controller/**',
+                    '**/Bot*'
+            ])
+        })
     }
 }
 

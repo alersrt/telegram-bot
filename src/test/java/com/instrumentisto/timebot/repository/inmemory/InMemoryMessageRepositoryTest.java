@@ -1,6 +1,8 @@
 package com.instrumentisto.timebot.repository.inmemory;
 
 import com.instrumentisto.timebot.entity.Message;
+import com.instrumentisto.timebot.exception.repository.InMemoryRepositoryMessageDoesNotExist;
+import com.instrumentisto.timebot.exception.repository.InMemoryRepositorySaveException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
@@ -63,6 +65,36 @@ public class InMemoryMessageRepositoryTest {
     }
 
     /**
+     * Test for {@code findById(int id)} method.
+     *
+     * Checks assertion:
+     * Return exception if message does not exist.
+     */
+    @Test(expected = InMemoryRepositoryMessageDoesNotExist.class)
+    public void findById_exceptionIfMessageDoesNotExist_returnException() {
+        InMemoryMessageRepository messageRepository = new InMemoryMessageRepository();
+        Message message1 = new Message();
+        Message message2 = new Message();
+
+        message1.setId(1);
+        message1.setText("t1");
+        message1.setChatId("1");
+
+        message2.setId(2);
+        message2.setText("t2");
+        message2.setChatId("2");
+
+        List<Message> repository = new ArrayList<>();
+        repository.add(message1);
+        repository.add(message2);
+
+        messageRepository.setRepository(repository);
+        messageRepository.setIdSequencer(3);
+
+        messageRepository.findById(5);
+    }
+
+    /**
      * Test for {@code saveMessage(message)} method.
      *
      * Checks assertion:
@@ -102,6 +134,19 @@ public class InMemoryMessageRepositoryTest {
             messageRepository.getRepository().stream()
                 .filter(m -> m.getId() == 3).findFirst()
                 .get());
+    }
+
+    /**
+     * Test for {@code saveMessage(message)} method.
+     *
+     * Checks assertion:
+     * {@link Message} which saved in to repository must not be null.
+     */
+    @Test(expected = InMemoryRepositorySaveException.class)
+    public void saveMessage_exceprionIfSomethingWrong_returnException() {
+        InMemoryMessageRepository messageRepository = new InMemoryMessageRepository();
+
+        messageRepository.saveMessage(null);
     }
 
     /**

@@ -2,7 +2,6 @@ package com.instrumentisto.timebot.handler;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.entity.Message;
-import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
 import com.instrumentisto.timebot.exception.repository.InMemoryRepositoryIsEmpty;
 import com.instrumentisto.timebot.service.MessageTransferService;
 import com.instrumentisto.timebot.util.ConverterUtil;
@@ -38,8 +37,7 @@ public class TelegramResponseHandler implements ResponseHandler {
      * {@inheritDoc}
      */
     @Override
-    public List<BaseDTO> handleResponse()
-        throws InMemoryRepositoryIsEmpty, DTOConversionIsNotPossible {
+    public List<BaseDTO> handleResponse()  {
 
         List<Message> repositoryMessages = messageTransferService.getMessages();
 

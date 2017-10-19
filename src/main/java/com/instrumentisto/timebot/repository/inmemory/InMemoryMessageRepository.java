@@ -84,6 +84,11 @@ public class InMemoryMessageRepository implements MessageRepository {
     @Override
     public void saveMessage(Message message)
         throws InMemoryRepositorySaveException {
+
+        if (message == null) {
+            throw new InMemoryRepositorySaveException();
+        }
+
         message.setId(idSequencer++);
         repository.add(message);
     }
