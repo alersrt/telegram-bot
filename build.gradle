@@ -78,6 +78,7 @@ jacocoTestReport {
 
 // Pitest is mutation testing plugin
 pitest {
+    mutationThreshold 50
     threads = 4
     outputFormats = ['XML', 'HTML']
     timestampedReports = false

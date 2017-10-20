@@ -41,11 +41,12 @@ test:
   dependencies: [lint]
   image: gradle:alpine
   script:
-  - gradle test jacocoTestReport jacocoTestCoverageVerification
+  - gradle test jacocoTestReport jacocoTestCoverageVerification pitest
   artifacts:
     paths:
     - build/reports/jacoco
     - build/reports/tests
+    - build/reports/pitest
     - .gradle/caches
     expire_in: 1 hr
 
