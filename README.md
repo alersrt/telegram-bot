@@ -125,7 +125,7 @@ You can check your code with help of [PMD code analyzer][16] via docker-containe
 ```bash
 $ make lint
 ```
-Also, this analyzer generates report which available by this path: `<project dir>/build/reports/pmd`
+Also, this analyzer generates report which available by this path: `<project dir>/build/reports/pmd`.
 
 [1]: http://mediatoolbox.ru/blog/botyi-telegram-vsyo-chto-vyi-hoteli-pro-nih-sprosit/
 [2]: https://git.instrumentisto.com/common/documentation/blob/master/developers/workflow.md#issue-lifecycle

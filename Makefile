@@ -33,10 +33,15 @@ endif
 ### Docker section
 ###########################
 
+#clean command
+clean:
+	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
+    gradle:latest gradle clean
+
 # build command
 build:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-	gradle:alpine gradle clean build -x test
+	gradle:alpine gradle  build -x test
 
 # run command
 run: | build
@@ -46,16 +51,16 @@ run: | build
 # docs command
 docs:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-	gradle:alpine gradle clean javadoc
+	gradle:alpine gradle javadoc
 
 # test command
 test:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-    gradle:alpine gradle clean test jacocoTestReport jacocoTestCoverageVerification
+    gradle:alpine gradle test jacocoTestReport jacocoTestCoverageVerification
 
 # lint command
 lint:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-    gradle:alpine gradle clean pmdMain pmdTest
+    gradle:alpine gradle pmdMain pmdTest
 
-.PHONY: docs test lint run build squash
+.PHONY: deps clean docs test lint run build squash

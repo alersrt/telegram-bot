@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '1.5.7.RELEASE'
+    id 'org.springframework.boot' version '1.5.8.RELEASE'
     id "com.adarshr.test-logger" version "1.0.0"
     id 'com.github.ksoichiro.console.reporter' version '0.5.0'
 }
@@ -20,15 +20,27 @@ repositories {
 
 // Project dependencies.
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-tools', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: gradle.sbVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: gradle.sbVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: gradle.sbVersion
     compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: gradle.jtbaVersion
 
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: gradle.junitVersion
     testCompile group: 'org.mockito', name: 'mockito-core', version: gradle.mockitoVersion
+}
+
+// Download dependencies
+task downloadDependencies {
+    description "Pre-downloads *most* dependencies"
+    doLast {
+        configurations.getAsMap().each { name, config ->
+            println "Retrieving dependencies for ${name}"
+            try {
+                config.files
+            } catch (e) {
+                project.logger.info e.message // some cannot be resolved, silentlyish skip them
+            }
+        }
+    }
 }
 
 // Make jar file as executable
