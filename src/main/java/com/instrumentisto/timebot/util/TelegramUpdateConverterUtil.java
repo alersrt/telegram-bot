@@ -17,7 +17,11 @@ public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
     @Override
     public BaseDTO toDTO(Update update) {
         BaseDTO baseDTO = new BaseDTO();
-        baseDTO.addValueOfField("text", update.message().text());
+
+        String updateMessageText =
+            update.message().text() != null ? update.message().text() : "";
+
+        baseDTO.addValueOfField("text", updateMessageText);
         baseDTO.addValueOfField("chatId", update.message().from().id());
         baseDTO.addValueOfField("username",
             update.message().from().username() != null ? update.message()
@@ -29,7 +33,7 @@ public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
      * {@inheritDoc}
      */
     @Override
-    public Update fromDTO(BaseDTO baseDto) throws DTOConversionIsNotPossible {
+    public Update fromDTO(BaseDTO baseDto) {
         throw new DTOConversionIsNotPossible();
     }
 }

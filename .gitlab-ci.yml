@@ -1,0 +1,74 @@
+stages:
+  - deps
+  - lint
+  - test
+  - docs
+  - build
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_HOST: 127.0.0.1:2375
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+deps:
+  image: gradle:alpine
+  stage: deps
+  script:
+  - gradle downloadDependencies --refresh-dependencies
+  artifacts:
+      paths:
+      - .gradle/caches
+      expire_in: 1 day
+
+lint:
+  stage: lint
+  dependencies: [deps]
+  image: gradle:alpine
+  script:
+  - gradle pmdMain pmdTest
+  artifacts:
+    paths:
+    - build/reports/pmd
+    - .gradle/caches
+    expire_in: 1 day
+
+test:
+  stage: test
+  dependencies: [lint]
+  image: gradle:alpine
+  script:
+  - gradle test jacocoTestReport jacocoTestCoverageVerification pitest
+  artifacts:
+    paths:
+    - build/reports/jacoco
+    - build/reports/tests
+    - build/reports/pitest
+    - .gradle/caches
+    expire_in: 1 hr
+
+docs:
+  stage: docs
+  dependencies: [test]
+  image: gradle:alpine
+  script:
+  - gradle javadoc
+  artifacts:
+    paths:
+    - build/docs
+    - .gradle/caches
+    expire_in: 1 day
+
+build:
+  stage: build
+  dependencies: [test]
+  image: gradle:alpine
+  script:
+  - gradle build -x test
+  artifacts:
+    paths:
+    - build/libs
+    expire_in: 1 day

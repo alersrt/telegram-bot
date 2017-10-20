@@ -2,7 +2,6 @@ package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.entity.Message;
-import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +29,7 @@ public class TelegramMessageConverterUtilTest {
      * 2. Fields of {@link BaseDTO} must be equals to fields of {@link Message}.
      */
     @Test
-    public void testMessageToDTO()
-        throws Exception, DTOConversionIsNotPossible {
+    public void testMessageToDTO() throws Exception {
         Message message = new Message();
         message.setText("test");
         message.setChatId("1L");
@@ -52,8 +50,7 @@ public class TelegramMessageConverterUtilTest {
      * 2. Fields of {@link Message} must be equals to fields of {@link BaseDTO}.
      */
     @Test
-    public void testMessageFromDTO()
-        throws Exception, DTOConversionIsNotPossible {
+    public void testMessageFromDTO() throws Exception {
         Message message1 = new Message();
         message1.setText("test");
         message1.setChatId("1L");

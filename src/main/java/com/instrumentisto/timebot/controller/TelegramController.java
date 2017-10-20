@@ -1,11 +1,7 @@
 package com.instrumentisto.timebot.controller;
 
-import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.conf.logging.Logging;
-import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
-import com.instrumentisto.timebot.exception.DTO.DTOFieldDoesNotExist;
 import com.instrumentisto.timebot.exception.repository.InMemoryRepositoryIsEmpty;
-import com.instrumentisto.timebot.exception.repository.InMemoryRepositorySaveException;
 import com.instrumentisto.timebot.handler.RequestHandler;
 import com.instrumentisto.timebot.handler.ResponseHandler;
 import com.instrumentisto.timebot.util.ConverterUtil;
@@ -82,42 +78,22 @@ public class TelegramController implements BotController {
                 .execute(getUpdates);
 
             List<Update> updates = getUpdatesResponse.updates();
-            updates.stream().map(u -> {
-                BaseDTO baseDTO = null;
-                try {
-                    baseDTO = updateConverterUtil.toDTO(u);
-                } catch (DTOConversionIsNotPossible e) {
-                    logger.error(e.toString());
-                }
-                return baseDTO;
-            }).forEach(b -> {
-                try {
-                    requestHandler.handleRequest(b);
-                } catch (InMemoryRepositorySaveException | DTOFieldDoesNotExist |
-                    DTOConversionIsNotPossible e) {
-                    logger.error(e.toString());
-                }
-            });
+            updates.stream()
+                .map(updateConverterUtil::toDTO)
+                .forEach(requestHandler::handleRequest);
 
             lastUpdateId =
                 updates.size() > 0 ? updates.get(updates.size() - 1).updateId()
                     + 1 : 0;
 
             try {
-                responseHandler.handleResponse().stream().map(b -> {
-                    SendMessage sendMessage = null;
-                    try {
-                        sendMessage = (SendMessage) sendMessageConverterUtil
-                            .fromDTO(b);
-                    } catch (DTOConversionIsNotPossible | DTOFieldDoesNotExist e) {
-                        logger.error(e.toString());
-                    }
-                    return sendMessage;
-                }).forEach(sm -> {
-                    telegramBot.execute(sm);
-                    logger.info(String.format("Answer was sent to %s",
-                        sm.getParameters().get("chat_id")));
-                });
+                responseHandler.handleResponse().stream()
+                    .map(sendMessageConverterUtil::fromDTO)
+                    .forEach(sm -> {
+                        telegramBot.execute(sm);
+                        logger.info(String.format("Answer was sent to %s",
+                            sm.getParameters().get("chat_id")));
+                    });
             } catch (InMemoryRepositoryIsEmpty e) {
                 // InMemoryRepositoryIsEmpty exception just talks that repository
                 // is empty at the current moment.

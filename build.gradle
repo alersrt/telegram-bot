@@ -1,25 +1,16 @@
-// Gradle scripts repositories and dependencies.
-buildscript {
-    repositories {
-        maven {
-            url 'http://dl.bintray.com/cjstehno/public'
-        }
-    }
-    dependencies {
-        classpath 'gradle-templates:gradle-templates:1.4.1'
-    }
-}
-
 plugins {
-    id 'org.springframework.boot' version '1.5.7.RELEASE'
+    id 'org.springframework.boot' version '1.5.8.RELEASE'
+    id "com.adarshr.test-logger" version "1.0.0"
+    id 'com.github.ksoichiro.console.reporter' version '0.5.0'
+    id "info.solidsoft.pitest" version "1.2.2"
 }
 
 apply plugin: 'java'
-apply plugin: 'templates'
-apply plugin: 'webapp-templates'
+apply plugin: "jacoco"
+apply plugin: 'pmd'
 
 group 'com.instrumentisto'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 sourceCompatibility = 1.8
 
@@ -30,26 +21,108 @@ repositories {
 
 // Project dependencies.
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-tools', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: gradle.sbVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: gradle.sbVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: gradle.sbVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: gradle.sbVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: gradle.sbVersion
-
     compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: gradle.jtbaVersion
 
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: gradle.junitVersion
     testCompile group: 'org.mockito', name: 'mockito-core', version: gradle.mockitoVersion
 }
 
+// Download dependencies
+task downloadDependencies {
+    description "Pre-downloads *most* dependencies"
+    doLast {
+        configurations.getAsMap().each { name, config ->
+            println "Retrieving dependencies for ${name}"
+            try {
+                config.files
+            } catch (e) {
+                project.logger.info e.message // some cannot be resolved, silentlyish skip them
+            }
+        }
+    }
+}
+
+// Make jar file as executable
 springBoot {
     executable = true
 }
 
+// Set data of *.properties file from *.dev files
 processResources {
     include "**/telegramBot.properties.dev"
     rename {
         'telegramBot.properties'
     }
+}
+
+// Settings for JaCoCo report: enabled Html-report; excludes excess packages and classes from JaCoCo
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/conf/**',
+                    '**/controller/**',
+                    '**/Bot*'
+            ])
+        })
+    }
+}
+
+// Pitest is mutation testing plugin
+pitest {
+    mutationThreshold 50
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    excludedClasses = [
+            'com.instrumentisto.timebot.conf.*',
+            'com.instrumentisto.timebot.controller.*',
+            'com.instrumentisto.timebot.Bot'
+    ]
+}
+
+// Settings for console-reporter: it throws failure if covering will be less than 50%
+consoleReporter {
+    jacoco.thresholdFine 90
+    jacoco.thresholdError 50
+    jacoco.failIfLessThanThresholdError true
+}
+
+// Settings for PMD. Names of rulesets was taken from there:
+// https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/rulesets/java
+pmd {
+    consoleOutput true
+    ignoreFailures true
+    rulePriority 2
+    ruleSets = [
+            'java-basic',
+            'java-braces',
+            'java-j2ee',
+            'java-junit',
+            'java-imports',
+            'java-unnecessary',
+            'java-unusedcode',
+            'java-javabeans',
+            'java-design',
+            'java-optimizations',
+            'java-empty',
+            'java-codesize',
+            'java-comments',
+            'java-coupling',
+            'java-clone',
+            'java-controversial',
+            'java-finalizers',
+            'java-strictexception',
+            'java-strings',
+            'java-sunsecure',
+            'java-typeresolution'
+    ]
 }

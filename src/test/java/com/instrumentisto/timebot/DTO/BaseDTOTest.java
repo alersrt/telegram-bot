@@ -44,7 +44,7 @@ public class BaseDTOTest {
      * 4. Hashcodes of identical objects must be equals;
      * 5. Different objects must not be equals;
      * 6. Hashcode of different objects must not be equals;
-     * 7. Object must not be equals to {@code null};
+     * 7. Object must not be equals to object of another class;
      * 8. Object must be equals to itselve;
      * 9. Hashcode of object for in case when inner map equals to {@code null},
      * must be equal to 0.
@@ -80,7 +80,7 @@ public class BaseDTOTest {
             "Test hashCode() for different objects",
             baseDTO1.hashCode() == baseDTO2.hashCode());
 
-        Assert.assertFalse("Test equals() for null", baseDTO1.equals(null));
+        Assert.assertFalse(baseDTO1.equals(new Object()));
         Assert.assertTrue("Test equals() for the same object",
             baseDTO1.equals(baseDTO1));
 
