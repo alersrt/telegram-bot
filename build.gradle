@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '1.5.8.RELEASE'
     id "com.adarshr.test-logger" version "1.0.0"
     id 'com.github.ksoichiro.console.reporter' version '0.5.0'
+    id "info.solidsoft.pitest" version "1.2.2"
 }
 
 apply plugin: 'java'
@@ -73,6 +74,18 @@ jacocoTestReport {
             ])
         })
     }
+}
+
+// Pitest is mutation testing plugin
+pitest {
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    excludedClasses = [
+            'com.instrumentisto.timebot.conf.*',
+            'com.instrumentisto.timebot.controller.*',
+            'com.instrumentisto.timebot.Bot'
+    ]
 }
 
 // Settings for console-reporter: it throws failure if covering will be less than 50%

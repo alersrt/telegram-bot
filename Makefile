@@ -56,11 +56,12 @@ docs:
 # test command
 test:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-    gradle:alpine gradle test jacocoTestReport jacocoTestCoverageVerification
+    gradle:alpine gradle test jacocoTestReport \
+    jacocoTestCoverageVerification pitest
 
 # lint command
 lint:
 	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
     gradle:alpine gradle pmdMain pmdTest
 
-.PHONY: deps clean docs test lint run build squash
+.PHONY: clean docs test lint run build squash

@@ -1,5 +1,8 @@
 package com.instrumentisto.timebot.repository.inmemory;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.instrumentisto.timebot.entity.Message;
 import com.instrumentisto.timebot.exception.repository.InMemoryRepositoryMessageDoesNotExist;
 import com.instrumentisto.timebot.exception.repository.InMemoryRepositorySaveException;
@@ -42,23 +45,17 @@ public class InMemoryMessageRepositoryTest {
     public void findById_equalityOfOriginalMessageAndResult_returnOk()
         throws Exception {
         InMemoryMessageRepository messageRepository = new InMemoryMessageRepository();
-        Message message1 = new Message();
-        Message message2 = new Message();
+        Message message1 = mock(Message.class);
 
-        message1.setId(1);
-        message1.setText("t1");
-        message1.setChatId("1");
-
-        message2.setId(2);
-        message2.setText("t2");
-        message2.setChatId("2");
+        when(message1.getId()).thenReturn(1);
+        when(message1.getText()).thenReturn("t1");
+        when(message1.getChatId()).thenReturn("1");
 
         List<Message> repository = new ArrayList<>();
         repository.add(message1);
-        repository.add(message2);
 
         messageRepository.setRepository(repository);
-        messageRepository.setIdSequencer(3);
+        messageRepository.setIdSequencer(2);
 
         Assert.assertNotNull(messageRepository.findById(1));
         Assert.assertEquals(message1, messageRepository.findById(1));
@@ -106,33 +103,17 @@ public class InMemoryMessageRepositoryTest {
         throws Exception {
         InMemoryMessageRepository messageRepository = new InMemoryMessageRepository();
 
-        Message message1 = new Message();
-        message1.setId(1);
-        message1.setText("t1");
-        message1.setChatId("1");
+        Message message = new Message();
 
-        Message message2 = new Message();
-        message2.setId(2);
-        message2.setText("t2");
-        message2.setChatId("2");
+        messageRepository.saveMessage(message);
+        messageRepository.saveMessage(message);
+        messageRepository.saveMessage(message);
 
-        List<Message> repository = new ArrayList<>();
-        repository.add(message1);
-        repository.add(message2);
-
-        messageRepository.setRepository(repository);
-        messageRepository.setIdSequencer(3);
-
-        Message message3 = new Message();
-        message3.setId(3);
-        message2.setText("t3");
-        message2.setChatId("3");
-
-        messageRepository.saveMessage(message3);
-
-        Assert.assertEquals(message3,
+        Assert.assertEquals(message,
             messageRepository.getRepository().stream()
-                .filter(m -> m.getId() == 3).findFirst()
+                .filter(
+                    m -> m.getId() == messageRepository.getIdSequencer() - 1)
+                .findFirst()
                 .get());
     }
 

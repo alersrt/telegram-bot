@@ -107,5 +107,6 @@ public class InMemoryMessageRepository implements MessageRepository {
     @Override
     public void removeAll() {
         repository.clear();
+        idSequencer = 0;
     }
 }
