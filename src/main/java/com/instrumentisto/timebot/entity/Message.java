@@ -26,6 +26,18 @@ public class Message {
     private String username;
 
     /**
+     * Field which contains location of recipient. First parameter is latitude,
+     * second is longitude. By default it has value of Greenwich coordinates.
+     */
+    private double[] location = {51.28, 0.0};
+
+    /**
+     * Field which contains timezone of recipient. By default it has timezone of
+     * Greenwich.
+     */
+    private String timezoneId = "Europe/London";
+
+    /**
      * Gets value of {@code id} field.
      *
      * @return {@link long} value.
@@ -98,6 +110,42 @@ public class Message {
     }
 
     /**
+     * Gets value of {@code location} field.
+     *
+     * @return double[] value.
+     */
+    public double[] getLocation() {
+        return location;
+    }
+
+    /**
+     * Sets {@code location} field.
+     *
+     * @param location value to which need to set {@code location} field.
+     */
+    public void setLocation(double[] location) {
+        this.location = location;
+    }
+
+    /**
+     * Gets value of {@code timezoneId} field.
+     *
+     * @return {@link String} value.
+     */
+    public String getTimezoneId() {
+        return timezoneId;
+    }
+
+    /**
+     * Sets {@code timezoneId} field.
+     *
+     * @param timezoneId value to which need to set {@code timezoneId} field.
+     */
+    public void setTimezoneId(String timezoneId) {
+        this.timezoneId = timezoneId;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -111,10 +159,14 @@ public class Message {
 
         Message message = (Message) o;
 
-        return id == message.id
-            && (text != null ? text.equals(message.text) : message.text == null)
-            && (chatId != null ? chatId.equals(message.chatId)
-            : message.chatId == null);
+        if (id != message.id) {
+            return false;
+        }
+        if (text != null ? !text.equals(message.text) : message.text != null) {
+            return false;
+        }
+        return chatId != null ? chatId.equals(message.chatId)
+            : message.chatId == null;
     }
 
     /**

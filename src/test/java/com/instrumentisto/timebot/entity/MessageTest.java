@@ -66,7 +66,7 @@ public class MessageTest {
     }
 
     /**
-     * Test getter and setter for {@code chatId} field of {@link Message}.
+     * Test getter and setter for {@code username} field of {@link Message}.
      *
      * Checks assertions:
      * 1. {@code username} field of new object must be null;
@@ -82,6 +82,48 @@ public class MessageTest {
         message.setUsername("username");
 
         Assert.assertEquals("username", message.getUsername());
+    }
+
+    /**
+     * Test getter and setter for {@code location} field of {@link Message}.
+     *
+     * Checks assertions:
+     * 1. {@code location} field of new object must not be null;
+     * 2. Returned value for message which have {@code location} field equals to
+     * {@code [55.45, 37.36]}, must be equals to {@code [55.45, 37.36]}.
+     */
+    @Test
+    public void testGetAndSetForLocation() throws Exception {
+        Message message = new Message();
+
+        Assert.assertNotNull(message.getLocation());
+
+        double[] location = {55.45, 37.36};
+
+        message.setLocation(location);
+
+        Assert.assertEquals(location, message.getLocation());
+    }
+
+    /**
+     * Test getter and setter for {@code timezoneId} field of {@link Message}.
+     *
+     * Checks assertions:
+     * 1. {@code timezoneId} field of new object must not be null;
+     * 2. Returned value for message which have {@code timezoneId} field equals
+     * to {@code "Europe/Moscow"}, must be equals to {@code "Europe/Moscow"}.
+     */
+    @Test
+    public void testGetAndSetTimezoneId() throws Exception {
+        Message message = new Message();
+
+        Assert.assertNotNull(message.getTimezoneId());
+
+        String timezoneId = "Europe/Moscow";
+
+        message.setTimezoneId(timezoneId);
+
+        Assert.assertEquals(timezoneId, message.getTimezoneId());
     }
 
     /**
@@ -133,5 +175,12 @@ public class MessageTest {
         Assert.assertFalse(message1.equals(new Object()));
         Assert.assertTrue("Test equals() for the same object",
             message1.equals(message1));
+
+
+        message2.setId(1);
+        message1.setText(null);
+
+        Assert.assertFalse(
+            message1.equals(message2) && message2.equals(message1));
     }
 }
