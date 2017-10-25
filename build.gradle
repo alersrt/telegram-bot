@@ -12,9 +12,9 @@ buildscript {
 }
 
 plugins {
-    id "com.adarshr.test-logger" version "1.0.0"
     id 'com.github.ksoichiro.console.reporter' version '0.5.0'
     id "info.solidsoft.pitest" version "1.2.2"
+    id 'com.adarshr.test-logger' version '1.0.1'
 }
 
 apply plugin: 'org.springframework.boot'
@@ -89,6 +89,11 @@ jacocoTestReport {
             ])
         })
     }
+}
+
+// Config for test task
+testlogger {
+    theme 'mocha'
 }
 
 // Pitest is mutation testing plugin
