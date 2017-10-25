@@ -20,11 +20,11 @@ rootProject.name = 'time-api'
 // java-telegram-bot-api version
 gradle.ext.jtbaVersion = '3.3.0'
 
-// spring-boot version
-gradle.ext.sbVersion = '1.5.8.RELEASE'
-
 // JUnit version
 gradle.ext.junitVersion = '5.0.1'
 
 // Mockito version
 gradle.ext.mockitoVersion = '2.11.0'
+
+// GeoNames API version
+gradle.ext.googlemapsVersion = '0.2.4'

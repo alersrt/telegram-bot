@@ -23,7 +23,7 @@ public class TelegramConfig {
     /**
      * Returns {@link TelegramBot} bean for our token.
      *
-     * @return {@link TelegramBot} value
+     * @return {@link TelegramBot} value.
      */
     @Bean
     TelegramBot telegramBot() {
