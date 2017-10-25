@@ -2,6 +2,7 @@ package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.entity.Message;
+import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,9 @@ public class TelegramMessageConverterUtilTest {
         Message message = new Message();
         message.setText("test");
         message.setChatId("1L");
+        message.setUsername("username");
+        message.setLocation(new double[]{52.31, 85.10});
+        message.setTimezoneId("Asia/Krasnoyarsk");
 
         BaseDTO baseDTO = converterUtil.toDTO(message);
 
@@ -40,6 +44,13 @@ public class TelegramMessageConverterUtilTest {
         Assert.assertEquals(baseDTO.getValueOfField("text"), message.getText());
         Assert.assertEquals(baseDTO.getValueOfField("chatId"),
             message.getChatId());
+        Assert.assertEquals(message.getUsername(),
+            baseDTO.getValueOfField("username"));
+        Assert.assertTrue(Arrays.equals(message.getLocation(),
+            new double[]{(Double) baseDTO.getValueOfField("latitude"),
+                (Double) baseDTO.getValueOfField("longitude")}));
+        Assert.assertEquals(message.getTimezoneId(),
+            baseDTO.getValueOfField("timezoneId"));
     }
 
     /**
@@ -60,6 +71,9 @@ public class TelegramMessageConverterUtilTest {
         baseDTO.addValueOfField("text", "test");
         baseDTO.addValueOfField("chatId", "1L");
         baseDTO.addValueOfField("username", "username");
+        baseDTO.addValueOfField("latitude", 51.28);
+        baseDTO.addValueOfField("longitude", 0.00);
+        baseDTO.addValueOfField("timezoneId", "Europe/London");
         Message message2 = converterUtil.fromDTO(baseDTO);
 
         Assert.assertNotNull(message2);

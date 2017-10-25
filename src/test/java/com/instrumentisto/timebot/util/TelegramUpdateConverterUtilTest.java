@@ -31,9 +31,12 @@ public class TelegramUpdateConverterUtilTest {
      * Test for {@code toDTO()} method.
      *
      * Checks assertions:
-     * 1. Returned {@link BaseDTO} must not be {@code null};
+     * 1. Returned {@link BaseDTO} must not be {@code null}.
      * 2. Stored fields of returned {@link BaseDTO} must be equals to field of
      * original {@link Update}.
+     * 3. Stored text field for nullable message test must be equals to "".
+     * 4. Stored username field for message which contained nullable user must be
+     * equals to "user which has no username".
      */
     @Test
     public void testUpdateToDTO() throws Exception {
@@ -52,6 +55,13 @@ public class TelegramUpdateConverterUtilTest {
         Assert.assertEquals("test", baseDTO.getValueOfField("text"));
         Assert.assertEquals(1, baseDTO.getValueOfField("chatId"));
         Assert.assertEquals("username", baseDTO.getValueOfField("username"));
+
+        when(message.text()).thenReturn(null);
+        when(user.username()).thenReturn(null);
+        BaseDTO baseDTO1 = converterUtil.toDTO(update);
+        Assert.assertEquals("user which has no username",
+            baseDTO1.getValueOfField("username"));
+        Assert.assertEquals("", baseDTO1.getValueOfField("text"));
     }
 
     /**
