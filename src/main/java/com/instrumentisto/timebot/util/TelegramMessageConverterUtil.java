@@ -22,6 +22,8 @@ public class TelegramMessageConverterUtil implements ConverterUtil<Message> {
         baseDTO.addValueOfField("username", message.getUsername());
         baseDTO.addValueOfField("latitude", message.getLocation()[0]);
         baseDTO.addValueOfField("longitude", message.getLocation()[1]);
+        baseDTO
+            .addValueOfField("isDefaultLocation", message.isDefaultLocation());
         return baseDTO;
     }
 
@@ -38,7 +40,8 @@ public class TelegramMessageConverterUtil implements ConverterUtil<Message> {
         double[] location = {(Double) baseDto.getValueOfField("latitude"),
             (Double) baseDto.getValueOfField("longitude")};
         message.setLocation(location);
-
+        message.setDefaultLocation(
+            (Boolean) baseDto.getValueOfField("isDefaultLocation"));
         return message;
     }
 }

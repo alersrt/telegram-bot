@@ -36,7 +36,6 @@ public class TelegramMessageConverterUtilTest {
         message.setChatId("1L");
         message.setUsername("username");
         message.setLocation(new double[]{52.31, 85.10});
-        message.setTimezoneId("Asia/Krasnoyarsk");
 
         BaseDTO baseDTO = converterUtil.toDTO(message);
 
@@ -49,6 +48,8 @@ public class TelegramMessageConverterUtilTest {
         Assert.assertTrue(Arrays.equals(message.getLocation(),
             new double[]{(Double) baseDTO.getValueOfField("latitude"),
                 (Double) baseDTO.getValueOfField("longitude")}));
+        Assert
+            .assertTrue((Boolean) baseDTO.getValueOfField("isDefaultLocation"));
     }
 
     /**
@@ -63,15 +64,19 @@ public class TelegramMessageConverterUtilTest {
         Message message1 = new Message();
         message1.setText("test");
         message1.setChatId("1L");
-        message1.setUsername("username");
+        message1.setUsername("user");
+        message1.setDefaultLocation(false);
+        double[] location = {52.31, 85.10};
+        message1.setLocation(location);
 
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.addValueOfField("text", "test");
         baseDTO.addValueOfField("chatId", "1L");
-        baseDTO.addValueOfField("username", "username");
-        baseDTO.addValueOfField("latitude", 51.28);
-        baseDTO.addValueOfField("longitude", 0.00);
-        baseDTO.addValueOfField("timezoneId", "Europe/London");
+        baseDTO.addValueOfField("username", "user");
+        baseDTO.addValueOfField("latitude", 52.31);
+        baseDTO.addValueOfField("longitude", 85.10);
+        baseDTO.addValueOfField("isDefaultLocation", false);
+
         Message message2 = converterUtil.fromDTO(baseDTO);
 
         Assert.assertNotNull(message2);

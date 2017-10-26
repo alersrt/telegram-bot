@@ -23,6 +23,7 @@ public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
             update.message().text() != null ? update.message().text() : "";
 
         Location location = update.message().location();
+        baseDTO.addValueOfField("isDefaultLocation", location == null);
         baseDTO.addValueOfField("latitude",
             location != null ? location.latitude() : 51.28);
         baseDTO.addValueOfField("longitude",

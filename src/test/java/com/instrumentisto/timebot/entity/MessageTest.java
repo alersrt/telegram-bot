@@ -106,24 +106,22 @@ public class MessageTest {
     }
 
     /**
-     * Test getter and setter for {@code timezoneId} field of {@link Message}.
+     * Test getter and setter for {@code isDefaultLocation} field of {@link
+     * Message}.
      *
-     * Checks assertions:
-     * 1. {@code timezoneId} field of new object must not be null;
-     * 2. Returned value for message which have {@code timezoneId} field equals
-     * to {@code "Europe/Moscow"}, must be equals to {@code "Europe/Moscow"}.
+     * checks assertions:
+     * 1. {@code isDefaultLocation} field of new object must be true;
+     * 2. Returned value for message which have {@code isDefaultLocation} field
+     * equals to false, must be equals to false.
      */
     @Test
-    public void testGetAndSetTimezoneId() throws Exception {
+    public void testGetAndSetDefaultLocation() throws Exception {
         Message message = new Message();
 
-        Assert.assertNotNull(message.getTimezoneId());
+        Assert.assertTrue(message.isDefaultLocation());
 
-        String timezoneId = "Europe/Moscow";
-
-        message.setTimezoneId(timezoneId);
-
-        Assert.assertEquals(timezoneId, message.getTimezoneId());
+        message.setDefaultLocation(false);
+        Assert.assertFalse(message.isDefaultLocation());
     }
 
     /**
@@ -150,13 +148,21 @@ public class MessageTest {
         Assert.assertTrue("Test hashCode() for clear objects",
             message1.hashCode() == message2.hashCode());
 
+        double[] location = {52.31, 85.10};
+
         message1.setId(1);
         message1.setText("The same message");
         message1.setChatId("1L");
+        message1.setUsername("username");
+        message1.setLocation(location);
+        message1.setDefaultLocation(false);
 
         message2.setId(1);
         message2.setText("The same message");
         message2.setChatId("1L");
+        message2.setUsername("username");
+        message2.setLocation(location);
+        message2.setDefaultLocation(false);
 
         Assert.assertTrue("Test equals() for identical objects",
             message1.equals(message2) && message2.equals(message1));
@@ -166,6 +172,9 @@ public class MessageTest {
         message2.setId(2);
         message2.setText("Another message");
         message2.setChatId("2L");
+        message2.setUsername("user");
+        message2.setLocation(new double[]{51.28, 0.0});
+        message2.setDefaultLocation(true);
 
         Assert.assertFalse("Test equals() for different objects",
             message1.equals(message2) && message2.equals(message1));
@@ -175,7 +184,6 @@ public class MessageTest {
         Assert.assertFalse(message1.equals(new Object()));
         Assert.assertTrue("Test equals() for the same object",
             message1.equals(message1));
-
 
         message2.setId(1);
         message1.setText(null);

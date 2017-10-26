@@ -58,20 +58,16 @@ public class TelegramRequestHandler implements RequestHandler {
     public void handleRequest(BaseDTO baseDTO) {
 
         Message message = converterUtil.fromDTO(baseDTO);
-        switch (message.getText()) {
-            case "/time":
-                messageTransferService
-                    .saveMessage(timeService.queryProcessor(message));
-                break;
-            case "/start":
-                messageTransferService
-                    .saveMessage(startService.queryProcessor(message));
-                break;
-            default:
-                messageTransferService
-                    .saveMessage(defaultService.queryProcessor(message));
-                break;
-        }
 
+        if ("/time".equals(message.getText()) || !message.isDefaultLocation()) {
+            messageTransferService
+                .saveMessage(timeService.queryProcessor(message));
+        } else if ("/start".equals(message.getText())) {
+            messageTransferService
+                .saveMessage(startService.queryProcessor(message));
+        } else {
+            messageTransferService
+                .saveMessage(defaultService.queryProcessor(message));
+        }
     }
 }

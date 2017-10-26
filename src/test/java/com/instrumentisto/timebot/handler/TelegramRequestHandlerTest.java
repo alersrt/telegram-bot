@@ -112,6 +112,7 @@ public class TelegramRequestHandlerTest {
         BaseDTO baseDTO = mock(BaseDTO.class);
         Message message = mock(Message.class);
         when(message.getText()).thenReturn("/start");
+        when(message.isDefaultLocation()).thenReturn(true);
 
         when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
 
@@ -145,6 +146,7 @@ public class TelegramRequestHandlerTest {
         BaseDTO baseDTO = mock(BaseDTO.class);
         Message message = mock(Message.class);
         when(message.getText()).thenReturn("default");
+        when(message.isDefaultLocation()).thenReturn(true);
 
         when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
 
@@ -163,6 +165,4 @@ public class TelegramRequestHandlerTest {
         Assert.assertNotNull(messages.get(0));
         Assert.assertEquals("default", messages.get(0).getText());
     }
-
-
 }

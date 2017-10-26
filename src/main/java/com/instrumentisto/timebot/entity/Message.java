@@ -1,5 +1,7 @@
 package com.instrumentisto.timebot.entity;
 
+import java.util.Arrays;
+
 /**
  * Describes entity which presents bot's message.
  */
@@ -36,6 +38,11 @@ public class Message {
      * Greenwich.
      */
     private String timezoneId = "Europe/London";
+
+    /**
+     * Field which contains answer to question "is this location default?".
+     */
+    private boolean isDefaultLocation = true;
 
     /**
      * Gets value of {@code id} field.
@@ -128,21 +135,22 @@ public class Message {
     }
 
     /**
-     * Gets value of {@code timezoneId} field.
+     * Gets value of {@code isDefaultLocation} field.
      *
-     * @return {@link String} value.
+     * @return boolean value.
      */
-    public String getTimezoneId() {
-        return timezoneId;
+    public boolean isDefaultLocation() {
+        return isDefaultLocation;
     }
 
     /**
-     * Sets {@code timezoneId} field.
+     * Sets {@code isDefaultLocation} field.
      *
-     * @param timezoneId value to which need to set {@code timezoneId} field.
+     * @param defaultLocation value to which need to set {@code isDefaultLocation}
+     * field.
      */
-    public void setTimezoneId(String timezoneId) {
-        this.timezoneId = timezoneId;
+    public void setDefaultLocation(boolean defaultLocation) {
+        isDefaultLocation = defaultLocation;
     }
 
     /**
@@ -165,6 +173,12 @@ public class Message {
         if (text != null ? !text.equals(message.text) : message.text != null) {
             return false;
         }
+        if (isDefaultLocation != message.isDefaultLocation) {
+            return false;
+        }
+        if (!Arrays.equals(location, message.location)) {
+            return false;
+        }
         return chatId != null ? chatId.equals(message.chatId)
             : message.chatId == null;
     }
@@ -177,6 +191,7 @@ public class Message {
         int result = id;
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + (chatId != null ? chatId.hashCode() : 0);
+        result = 31 * result + (Arrays.hashCode(location));
         return result;
     }
 }
