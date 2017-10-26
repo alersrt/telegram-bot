@@ -2,6 +2,7 @@ package com.instrumentisto.timebot.util;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
+import com.pengrad.telegrambot.model.Location;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,12 @@ public class TelegramUpdateConverterUtil implements ConverterUtil<Update> {
 
         String updateMessageText =
             update.message().text() != null ? update.message().text() : "";
+
+        Location location = update.message().location();
+        baseDTO.addValueOfField("latitude",
+            location != null ? location.latitude() : 51.28);
+        baseDTO.addValueOfField("longitude",
+            location != null ? location.longitude() : 0.0);
 
         baseDTO.addValueOfField("text", updateMessageText);
         baseDTO.addValueOfField("chatId", update.message().from().id());

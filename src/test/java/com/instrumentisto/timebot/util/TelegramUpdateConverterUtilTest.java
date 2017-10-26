@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import com.instrumentisto.timebot.DTO.BaseDTO;
 import com.instrumentisto.timebot.exception.DTO.DTOConversionIsNotPossible;
+import com.pengrad.telegrambot.model.Location;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
@@ -37,16 +38,23 @@ public class TelegramUpdateConverterUtilTest {
      * 3. Stored text field for nullable message test must be equals to "".
      * 4. Stored username field for message which contained nullable user must be
      * equals to "user which has no username".
+     * 5. Stored location fields for nullable location must to have such values
+     * [latitude=51.28, longitude=0.0].
      */
     @Test
     public void testUpdateToDTO() throws Exception {
         Update update = mock(Update.class);
         Message message = mock(Message.class);
         User user = mock(User.class);
+        Location location = mock(Location.class);
+
         when(user.id()).thenReturn(1);
         when(user.username()).thenReturn("username");
+        when(location.latitude()).thenReturn(new Float(52.31));
+        when(location.longitude()).thenReturn(new Float(85.10));
         when(message.text()).thenReturn("test");
         when(message.from()).thenReturn(user);
+        when(message.location()).thenReturn(location);
         when(update.message()).thenReturn(message);
 
         BaseDTO baseDTO = converterUtil.toDTO(update);
@@ -55,13 +63,22 @@ public class TelegramUpdateConverterUtilTest {
         Assert.assertEquals("test", baseDTO.getValueOfField("text"));
         Assert.assertEquals(1, baseDTO.getValueOfField("chatId"));
         Assert.assertEquals("username", baseDTO.getValueOfField("username"));
+        Assert.assertTrue(
+            Math.abs(52.31 - (Double) baseDTO.getValueOfField("latitude"))
+                <= 0.001);
+        Assert.assertTrue(
+            Math.abs(85.10 - (Double) baseDTO.getValueOfField("longitude"))
+                <= 0.001);
 
         when(message.text()).thenReturn(null);
+        when(message.location()).thenReturn(null);
         when(user.username()).thenReturn(null);
         BaseDTO baseDTO1 = converterUtil.toDTO(update);
         Assert.assertEquals("user which has no username",
             baseDTO1.getValueOfField("username"));
         Assert.assertEquals("", baseDTO1.getValueOfField("text"));
+        Assert.assertEquals(51.28, baseDTO1.getValueOfField("latitude"));
+        Assert.assertEquals(0.0, baseDTO1.getValueOfField("longitude"));
     }
 
     /**

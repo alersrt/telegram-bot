@@ -2,7 +2,7 @@ package com.instrumentisto.timebot.service;
 
 import com.instrumentisto.timebot.entity.Message;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class TelegramMessageQueryTimeService implements MessageQueryService {
      */
     @Override
     public Message queryProcessor(Message message) {
-        LocalDateTime localDateTime = LocalDateTime.now(ZoneOffset.UTC);
+        LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of(message.getTimezoneId()));
         String datetime = localDateTime
             .format(DateTimeFormatter.ofPattern(datetimeformat));
         message.setText(datetime);

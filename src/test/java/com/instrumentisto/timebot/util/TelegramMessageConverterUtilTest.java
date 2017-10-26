@@ -49,8 +49,6 @@ public class TelegramMessageConverterUtilTest {
         Assert.assertTrue(Arrays.equals(message.getLocation(),
             new double[]{(Double) baseDTO.getValueOfField("latitude"),
                 (Double) baseDTO.getValueOfField("longitude")}));
-        Assert.assertEquals(message.getTimezoneId(),
-            baseDTO.getValueOfField("timezoneId"));
     }
 
     /**
