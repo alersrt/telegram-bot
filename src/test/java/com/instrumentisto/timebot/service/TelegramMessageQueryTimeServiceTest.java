@@ -1,42 +1,60 @@
 package com.instrumentisto.timebot.service;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
 import com.instrumentisto.timebot.entity.Message;
-import java.lang.reflect.Field;
+import com.instrumentisto.timebot.entity.User;
+import com.instrumentisto.timebot.externalAPI.GeoAPI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * Unit-test for {@link TelegramMessageQueryTimeService}.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class TelegramMessageQueryTimeServiceTest {
 
     /**
-     * Test for {@code queryProcessor(Message message)} method.
+     * Mocked {@link GeoAPI} field.
+     */
+    @Mock
+    private GeoAPI geoAPI;
+
+    /**
+     * TObject of testing class.
+     */
+    @InjectMocks
+    private MessageQueryService queryService = new TelegramMessageQueryTimeService();
+
+    /**
+     * Test for queryProcessor() method.
      *
-     * Checks assertions:
-     * 1. Output {@link Message} must not be null;
-     * 2. Output message must be equals to another message, text field of which
-     * was sets of hands.
+     * Check assertion: output message must be equals to another message, text
+     * field of which was sets of hands.
      */
     @Test
-    public void queryProcessor() throws Exception {
-        TelegramMessageQueryTimeService timeService = new TelegramMessageQueryTimeService();
+    public void queryProcessor() throws IllegalAccessException {
+        when(geoAPI.getTimeZoneId(51.28, 0.0)).thenReturn("Europe/London");
 
         String datetimePattern = "yyyy-MM-dd HH:mm:ss.SSS";
 
-        Message message = new Message();
-        message.setChatId("1");
+        User user = mock(User.class);
+        when(user.getLocation()).thenReturn(new double[]{51.28, 0.0});
+        Message message = spy(Message.class);
+        when(message.getUser()).thenReturn(user);
 
-        Field datetimeformatField = TelegramMessageQueryTimeService.class
-            .getDeclaredField("datetimeformat");
-        boolean accessible = datetimeformatField.isAccessible();
-        datetimeformatField.setAccessible(true);
-        datetimeformatField.set(timeService, datetimePattern);
-        datetimeformatField.setAccessible(accessible);
+        FieldUtils.writeDeclaredField(queryService, "datetimeformat", datetimePattern, true);
 
-        Message outMessage = timeService.queryProcessor(message);
+        Message outMessage = queryService.queryProcessor(message);
 
         String outDateTime = outMessage.getText();
 
@@ -45,7 +63,7 @@ public class TelegramMessageQueryTimeServiceTest {
         message.setText(
             localDateTime.format(DateTimeFormatter.ofPattern(datetimePattern)));
 
-        Assert.assertNotNull(outMessage);
         Assert.assertEquals(message, outMessage);
     }
+
 }

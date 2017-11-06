@@ -1,10 +1,24 @@
-plugins {
-    id 'org.springframework.boot' version '1.5.8.RELEASE'
-    id "com.adarshr.test-logger" version "1.0.0"
-    id 'com.github.ksoichiro.console.reporter' version '0.5.0'
-    id "info.solidsoft.pitest" version "1.2.2"
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.M5'
+    }
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
 }
 
+plugins {
+    id 'com.github.ksoichiro.console.reporter' version '0.5.0'
+    id "info.solidsoft.pitest" version "1.2.2"
+    id 'com.adarshr.test-logger' version '1.0.1'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 apply plugin: 'java'
 apply plugin: "jacoco"
 apply plugin: 'pmd'
@@ -17,16 +31,26 @@ sourceCompatibility = 1.8
 // Global repositories
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/libs-snapshot' }
+}
+
+bootJar {
+    launchScript ()
 }
 
 // Project dependencies.
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: gradle.sbVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: gradle.sbVersion
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: gradle.jtbaVersion
+    compile group: 'com.google.maps', name: 'google-maps-services', version: gradle.googlemapsVersion
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: gradle.aclang3Version
+    compile group: 'com.h2database', name:'h2', version: gradle.h2Version
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: gradle.hibernateValidatorVersion
 
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: gradle.junitVersion
     testCompile group: 'org.mockito', name: 'mockito-core', version: gradle.mockitoVersion
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 // Download dependencies
@@ -42,11 +66,6 @@ task downloadDependencies {
             }
         }
     }
-}
-
-// Make jar file as executable
-springBoot {
-    executable = true
 }
 
 // Set data of *.properties file from *.dev files
@@ -76,6 +95,11 @@ jacocoTestReport {
     }
 }
 
+// Config for test task
+testlogger {
+    theme 'mocha'
+}
+
 // Pitest is mutation testing plugin
 pitest {
     mutationThreshold 50
@@ -100,7 +124,7 @@ consoleReporter {
 // https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/rulesets/java
 pmd {
     consoleOutput true
-    ignoreFailures true
+    ignoreFailures false
     rulePriority 2
     ruleSets = [
             'java-basic',

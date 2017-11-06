@@ -1,14 +1,12 @@
 package com.instrumentisto.timebot.handler;
 
-import com.instrumentisto.timebot.DTO.BaseDTO;
+import com.instrumentisto.timebot.DTO.MessageDTO;
 import com.instrumentisto.timebot.entity.Message;
-import com.instrumentisto.timebot.exception.repository.InMemoryRepositoryIsEmpty;
-import com.instrumentisto.timebot.service.MessageTransferService;
-import com.instrumentisto.timebot.util.ConverterUtil;
+import com.instrumentisto.timebot.repository.MessageRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,37 +16,30 @@ import org.springframework.stereotype.Component;
 public class TelegramResponseHandler implements ResponseHandler {
 
     /**
-     * Injection of {@link com.instrumentisto.timebot.service.TelegramMessageTransferService}
-     * for {@link MessageTransferService}.
+     * Message's repository.
      */
     @Autowired
-    @Qualifier("telegramMessageTransferService")
-    private MessageTransferService messageTransferService;
+    private MessageRepository messageRepository;
 
     /**
-     * Injection of {@link com.instrumentisto.timebot.util.TelegramMessageConverterUtil}
-     * for {@link ConverterUtil}.
+     * Conversion Service.
      */
     @Autowired
-    @Qualifier("telegramMessageConverterUtil")
-    private ConverterUtil<Message> converterUtil;
+    private ConversionService converter;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<BaseDTO> handleResponse()  {
+    public List<MessageDTO> handleResponse() {
 
-        List<Message> repositoryMessages = messageTransferService.getMessages();
+        List<Message> repositoryMessages = messageRepository.findAll();
 
-        if (!repositoryMessages.isEmpty()) {
-            List<BaseDTO> sendMessages = repositoryMessages
-                .stream()
-                .map(converterUtil::toDTO).collect(Collectors.toList());
-            messageTransferService.clearRepository();
-            return sendMessages;
-        } else {
-            throw new InMemoryRepositoryIsEmpty();
-        }
+        List<MessageDTO> sendMessages = repositoryMessages
+            .stream()
+            .map(m -> converter.convert(m, MessageDTO.class))
+            .collect(Collectors.toList());
+        messageRepository.deleteAll();
+        return sendMessages;
     }
 }

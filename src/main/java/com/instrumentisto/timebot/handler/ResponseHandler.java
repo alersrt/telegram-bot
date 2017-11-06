@@ -1,6 +1,6 @@
 package com.instrumentisto.timebot.handler;
 
-import com.instrumentisto.timebot.DTO.BaseDTO;
+import com.instrumentisto.timebot.DTO.MessageDTO;
 import java.util.List;
 
 /**
@@ -11,7 +11,7 @@ public interface ResponseHandler {
     /**
      * Returns list of outputs answers to requests for bot.
      *
-     * @return {@link List} of {@link BaseDTO}.
+     * @return {@link List} of {@link MessageDTO}.
      */
-    List<BaseDTO> handleResponse();
+    List<MessageDTO> handleResponse();
 }

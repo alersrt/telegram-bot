@@ -1,6 +1,12 @@
 package com.instrumentisto.timebot.service;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
 import com.instrumentisto.timebot.entity.Message;
+import com.instrumentisto.timebot.entity.User;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,24 +16,30 @@ import org.junit.Test;
 public class TelegramMessageQueryStartServiceTest {
 
     /**
-     * Test for {@code queryProcessor(Message message)} method.
+     * Object of testing class.
+     */
+    private MessageQueryService queryService = new TelegramMessageQueryStartService();
+
+    /**
+     * Test for queryProcessor() method.
      *
-     * Checks assertions:
-     * 1. Output {@link Message} must not be null;
-     * 2. Output message text must be equals to expected text.
+     * Check assertion: text of returned message must be equals to "Hello,
+     * tester!\nsomething text".
      */
     @Test
-    public void queryProcessor() throws Exception {
-        TelegramMessageQueryStartService startService = new TelegramMessageQueryStartService();
+    public void queryProcessor() throws IllegalAccessException {
+        FieldUtils.writeDeclaredField(
+            queryService, "startMessage", "something text", true);
 
-        Message message = new Message();
-        message.setText("t1");
-        message.setUsername("username");
+        User user = mock(User.class);
+        when(user.getUsername()).thenReturn("tester");
+        Message message = spy(Message.class);
+        message.setText("initial message");
+        when(message.getUser()).thenReturn(user);
 
-        Message outMessage = startService.queryProcessor(message);
+        Message returnedMessage = queryService.queryProcessor(message);
 
-        Assert.assertNotNull(outMessage);
-        Assert.assertEquals("Hello, username!", outMessage.getText());
+        Assert.assertEquals("Hello, tester!\nsomething text",
+            returnedMessage.getText());
     }
-
 }

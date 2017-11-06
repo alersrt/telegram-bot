@@ -2,21 +2,25 @@ package com.instrumentisto.timebot.handler;
 
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.instrumentisto.timebot.DTO.BaseDTO;
+import com.instrumentisto.timebot.DTO.MessageDTO;
 import com.instrumentisto.timebot.entity.Message;
+import com.instrumentisto.timebot.entity.User;
+import com.instrumentisto.timebot.repository.MessageRepository;
+import com.instrumentisto.timebot.repository.UserRepository;
 import com.instrumentisto.timebot.service.MessageQueryService;
-import com.instrumentisto.timebot.service.MessageTransferService;
-import com.instrumentisto.timebot.util.ConverterUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.core.convert.ConversionService;
 
 /**
  * Unit-test for {@link TelegramRequestHandler}.
@@ -25,144 +29,257 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class TelegramRequestHandlerTest {
 
     /**
-     * Mock {@link ConverterUtil} as dependence for tested {@link RequestHandler}.
+     * Mock for converter.
      */
     @Mock
-    private ConverterUtil converterUtil;
+    private ConversionService converter;
 
     /**
-     * Mock {@link MessageTransferService} as dependence for tested {@link
-     * RequestHandler}.
+     * Mock for {@link MessageRepository}.
      */
     @Mock
-    private MessageTransferService messageTransferService;
+    private MessageRepository messageRepository;
 
     /**
-     * Mock {@link MessageQueryService} as dependence for tested {@link
-     * RequestHandler}.
+     * Mock for {@link UserRepository}.
      */
     @Mock
-    private MessageQueryService timeService;
+    private UserRepository userRepository;
 
     /**
-     * Mock {@link MessageQueryService} as dependence for tested {@link
-     * RequestHandler}.
-     */
-    @Mock
-    private MessageQueryService startService;
-
-    /**
-     * Mock {@link MessageQueryService} as dependence for tested {@link
-     * RequestHandler}.
+     * Mock for {@link com.instrumentisto.timebot.service.TelegramMessageQueryDefaultService}.
      */
     @Mock
     private MessageQueryService defaultService;
 
     /**
-     * Mock of {@link RequestHandler} field which initialized of {@link
-     * TelegramRequestHandler} and injects its dependencies.
+     * Mock for {@link com.instrumentisto.timebot.service.TelegramMessageQueryStartService}.
+     */
+    @Mock
+    private MessageQueryService startService;
+
+    /**
+     * Mock for {@link com.instrumentisto.timebot.service.TelegramMessageQueryTimeService}.
+     */
+    @Mock
+    private MessageQueryService timeService;
+
+    /**
+     * Object of tested class.
      */
     @InjectMocks
     private RequestHandler requestHandler = new TelegramRequestHandler();
 
     /**
-     * Test for {@code handleRequest(BaseDTO baseDTO)} method.
-     *
-     * Checks assertions:
-     * 1. Message which stored in repo must not be null;
-     * 2. Text of this message must be equals to {@code "datetime"}.
+     * Mock of test {@link com.instrumentisto.timebot.DTO.MessageDTO}.
      */
-    @Test
-    public void handleRequest_timeCommand() throws Exception {
-        List<Message> messages = new ArrayList<>();
+    @Mock
+    private MessageDTO messageDTO;
 
-        BaseDTO baseDTO = mock(BaseDTO.class);
-        Message message = mock(Message.class);
-        when(message.getText()).thenReturn("/time");
+    /**
+     * Mock of {@link Message} for default branch.
+     */
+    @Mock
+    private Message defaultMessage;
 
-        when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
+    /**
+     * Mock of {@link Message} for "/start" message.
+     */
+    @Mock
+    private Message startMessage;
 
-        doAnswer(invocation -> {
-            when(message.getText()).thenReturn("datetime");
-            return message;
-        }).when(timeService).queryProcessor(message);
+    /**
+     * Mock of {@link Message} for "/time message".
+     */
+    @Mock
+    private Message timeMessage;
 
-        doAnswer(invocation -> {
-            messages.add(invocation.getArgument(0));
-            return messages;
-        }).when(messageTransferService).saveMessage(message);
+    /**
+     * Mock of {@link Message} for test of main method.
+     */
+    @Mock
+    private Message baseMessage;
 
-        requestHandler.handleRequest(baseDTO);
+    /**
+     * Mock of {@link User} for test of main method.
+     */
+    @Mock
+    private User user;
 
-        Assert.assertNotNull(messages.get(0));
-        Assert.assertEquals("datetime", messages.get(0).getText());
+
+    /**
+     * Init boundaries for this test.
+     */
+    @Before
+    public void setUp() {
+        when(defaultMessage.getText()).thenReturn("");
+        when(defaultMessage.getUser()).thenReturn(user);
+
+        when(startMessage.getText()).thenReturn("/start");
+        when(startMessage.getUser()).thenReturn(user);
+
+        when(timeMessage.getText()).thenReturn("/time");
+        when(timeMessage.getUser()).thenReturn(user);
+
+        when(defaultService.queryProcessor(defaultMessage))
+            .thenReturn(defaultMessage);
+        when(startService.queryProcessor(startMessage))
+            .thenReturn(startMessage);
+        when(timeService.queryProcessor(timeMessage)).thenReturn(timeMessage);
+
+        when(baseMessage.getUser()).thenReturn(user);
+        when(user.getApiId()).thenReturn("12");
     }
 
     /**
-     * Test for {@code handleRequest(BaseDTO baseDTO)} method.
+     * Test for {@code handleRequest()} method. If user does not contains in
+     * repository that he must be saved there.
      *
-     * Checks assertions:
-     * 1. Message which stored in repo must not be null;
-     * 2. Text of this message must be equals to {@code "hello"}.
+     * Check assertion: User must be contained in repository.
      */
     @Test
-    public void handleRequest_startCommand() throws Exception {
-        List<Message> messages = new ArrayList<>();
+    public void handleRequest_userIsNotInDatabase_returnTrue() {
+        when(converter.convert(messageDTO, Message.class))
+            .thenReturn(baseMessage);
 
-        BaseDTO baseDTO = mock(BaseDTO.class);
-        Message message = mock(Message.class);
-        when(message.getText()).thenReturn("/start");
-
-        when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
-
+        List<User> userList = new ArrayList<>();
         doAnswer(invocation -> {
-            when(message.getText()).thenReturn("hello");
-            return message;
-        }).when(startService).queryProcessor(message);
+            userList.add(invocation.getArgument(0));
+            return invocation.getArgument(0);
+        }).when(userRepository).save(user);
 
-        doAnswer(invocation -> {
-            messages.add(invocation.getArgument(0));
-            return messages;
-        }).when(messageTransferService).saveMessage(message);
+        when(userRepository.findByApiId("12")).thenReturn(null);
 
-        requestHandler.handleRequest(baseDTO);
+        requestHandler.handleRequest(messageDTO);
 
-        Assert.assertNotNull(messages.get(0));
-        Assert.assertEquals("hello", messages.get(0).getText());
+        Assert.assertTrue(userList.contains(user));
     }
 
     /**
-     * Test for {@code handleRequest(BaseDTO baseDTO)} method.
+     * Test for {@code handleRequest} method. If user is contained in repository
+     * but location is default then contained user assign into message (because
+     * of
+     * Spring Data JPA).
      *
-     * Checks assertions:
-     * 1. Message which stored in repo must not be null;
-     * 2. Text of this message must be equals to {@code "default"}.
+     * Check assertion: new user is not added to repository (list size equals to
+     * 1).
      */
     @Test
-    public void handleRequest_defaultCommand() throws Exception {
-        List<Message> messages = new ArrayList<>();
+    public void handleRequest_userInDatabaseAndLocationIsDefault_returnTrue() {
+        when(converter.convert(messageDTO, Message.class))
+            .thenReturn(baseMessage);
+        when(messageDTO.isLocationDefault()).thenReturn(true);
+        when(userRepository.findByApiId("12")).thenReturn(user);
 
-        BaseDTO baseDTO = mock(BaseDTO.class);
-        Message message = mock(Message.class);
-        when(message.getText()).thenReturn("default");
+        User trashUser = mock(User.class);
+        when(trashUser.getApiId()).thenReturn("12");
+        when(baseMessage.getUser()).thenReturn(trashUser);
 
-        when(converterUtil.fromDTO(baseDTO)).thenReturn(message);
+        List<User> userList = new ArrayList<>();
+        userList.add(user);
 
-        doAnswer(invocation -> {
-            when(message.getText()).thenReturn("default");
-            return message;
-        }).when(defaultService).queryProcessor(message);
+        requestHandler.handleRequest(messageDTO);
 
-        doAnswer(invocation -> {
-            messages.add(invocation.getArgument(0));
-            return messages;
-        }).when(messageTransferService).saveMessage(message);
-
-        requestHandler.handleRequest(baseDTO);
-
-        Assert.assertNotNull(messages.get(0));
-        Assert.assertEquals("default", messages.get(0).getText());
+        Assert.assertTrue(userList.size() == 1 && user.equals(userList.get(0)));
     }
 
+    /**
+     * Test for {@code handleRequest} method. If user is contained in repository
+     * and location is not default then contained user is changed, saved into
+     * repository and assigned into message (because of Spring Data JPA).
+     *
+     * Check assertion: new user is added to repository (list size must be equals
+     * to 2).
+     */
+    @Test
+    public void handleRequest_userInDatabaseAndLocationIsNotDefault_returnTrue() {
+        when(converter.convert(messageDTO, Message.class))
+            .thenReturn(baseMessage);
+        when(messageDTO.isLocationDefault()).thenReturn(false);
 
+        User newUser = spy(User.class);
+        when(newUser.getApiId()).thenReturn("12");
+        when(baseMessage.getUser()).thenReturn(newUser);
+        when(userRepository.findByApiId("12")).thenReturn(newUser);
+
+        List<User> userList = new ArrayList<>();
+        userList.add(newUser);
+        doAnswer(invocation -> {
+            userList.add(invocation.getArgument(0));
+            return invocation.getArgument(0);
+        }).when(userRepository).save(newUser);
+
+        requestHandler.handleRequest(messageDTO);
+
+        Assert.assertTrue(userList.size() == 2);
+    }
+
+    /**
+     * Test for {@code handleRequest} method. Message repo must contains
+     * defaultMessage.
+     *
+     * Check assertion: message repository must contains defaultMessage.
+     */
+    @Test
+    public void handleRequest_handleDefaultMessage_returnTrue() {
+        when(converter.convert(messageDTO, Message.class))
+            .thenReturn(defaultMessage);
+        when(messageDTO.isLocationDefault()).thenReturn(true);
+
+        List<Message> messageList = new ArrayList<>();
+        doAnswer(invocation -> {
+            messageList.add(invocation.getArgument(0));
+            return invocation.getArgument(0);
+        }).when(messageRepository).save(defaultMessage);
+
+        requestHandler.handleRequest(messageDTO);
+
+        Assert.assertTrue(messageList.contains(defaultMessage));
+    }
+
+    /**
+     * Test for {@code handleRequest} method. Message repo must contains
+     * startMessage.
+     *
+     * Check assertion: message repository must contains startMessage.
+     */
+    @Test
+    public void handleRequest_handleStartMessage_returnTrue() {
+        when(converter.convert(messageDTO, Message.class))
+            .thenReturn(startMessage);
+        when(messageDTO.isLocationDefault()).thenReturn(true);
+
+        List<Message> messageList = new ArrayList<>();
+        doAnswer(invocation -> {
+            messageList.add(invocation.getArgument(0));
+            return invocation.getArgument(0);
+        }).when(messageRepository).save(startMessage);
+
+        requestHandler.handleRequest(messageDTO);
+
+        Assert.assertTrue(messageList.contains(startMessage));
+    }
+
+    /**
+     * Test for {@code handleRequest} method. Message repo must contains
+     * timeMessage.
+     *
+     * Check assertion: message repository must contains timeMessage.
+     */
+    @Test
+    public void handleRequest_handleTimeMessage_returnTrue() {
+        when(converter.convert(messageDTO, Message.class))
+            .thenReturn(timeMessage);
+        when(messageDTO.isLocationDefault()).thenReturn(true);
+
+        List<Message> messageList = new ArrayList<>();
+        doAnswer(invocation -> {
+            messageList.add(invocation.getArgument(0));
+            return invocation.getArgument(0);
+        }).when(messageRepository).save(timeMessage);
+
+        requestHandler.handleRequest(messageDTO);
+
+        Assert.assertTrue(messageList.contains(timeMessage));
+    }
 }
