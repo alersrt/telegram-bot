@@ -1,5 +1,8 @@
 package com.instrumentisto.timebot.entity;
 
+import static org.mockito.Mockito.mock;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,186 +12,210 @@ import org.junit.Test;
 public class MessageTest {
 
     /**
-     * Test getter and setter for {@code id} field of {@link Message}.
+     * Object of testing class.
+     */
+    private Message message = new Message();
+
+    /**
+     * Test getter for {@code id} field.
      *
-     * Checks assertions:
-     * 1. Id of new {@link Message} must be equals to 0;
-     * 2. Returned value for message which have id equals to 1, must be equals
-     * to 1.
+     * Check assertion: returned value must be equals to 2.
      */
     @Test
-    public void testGetAndSetForId() throws Exception {
-        Message message = new Message();
+    public void getId() throws IllegalAccessException {
+        FieldUtils.writeDeclaredField(message, "id", 2, true);
 
-        Assert.assertEquals(0, message.getId());
-
-        message.setId(1);
-
-        Assert.assertEquals(1, message.getId());
+        Assert.assertEquals(2, message.getId());
     }
 
     /**
-     * Test getter and setter for {@code text} field of {@link Message}.
+     * Test setter for {@code id} field.
      *
-     * Checks assertions:
-     * 1. {@code text} field of new message must be equals to {@code null};
-     * 2. Returned value for message which have {@code text} field equals to
-     * {@code "test"}, must be equals to {@code "test"}.
+     * Check assertion: value of {@code id} field must be equals to 4.
      */
     @Test
-    public void testGetAndSetForText() throws Exception {
-        Message message = new Message();
+    public void setId() throws IllegalAccessException {
+        message.setId(4);
 
-        Assert.assertNull(message.getText());
+        int idValue = (int) FieldUtils.readDeclaredField(message, "id", true);
 
-        message.setText("test");
-
-        Assert.assertEquals("test", message.getText());
+        Assert.assertEquals(4, idValue);
     }
 
     /**
-     * Test getter and setter for {@code chatId} field of {@link Message}.
+     * Test getter for {@code text} field.
      *
-     * Checks assertions:
-     * 1. {@code chatId} field of new object must be {@code null};
-     * 2. Returned value for message which have {@code chatId} field equals to
-     * {@code "1L"}, must be equals to {@code "1L"}.
+     * Check assertion: returned value must be equals to "test message".
      */
     @Test
-    public void testGetAndSetForChatId() throws Exception {
-        Message message = new Message();
+    public void getText() throws IllegalAccessException {
+        FieldUtils.writeDeclaredField(message, "text", "test message", true);
 
-        Assert.assertNull(message.getChatId());
-
-        message.setChatId("1L");
-
-        Assert.assertEquals("1L", message.getChatId());
+        Assert.assertEquals("test message", message.getText());
     }
 
     /**
-     * Test getter and setter for {@code username} field of {@link Message}.
+     * Test setter for {@code test} field.
      *
-     * Checks assertions:
-     * 1. {@code username} field of new object must be null;
-     * 2. Returned value for message which have {@code username} field equals to
-     * {@code "username"}, must be equals to {@code "username"}.
+     * Check assertion: value of {@code text} field must be equals to "another
+     * message".
      */
     @Test
-    public void testGetAndSetForUsername() throws Exception {
-        Message message = new Message();
+    public void setText() throws IllegalAccessException {
+        message.setText("another message");
 
-        Assert.assertNull(message.getUsername());
+        String textValue = (String) FieldUtils
+            .readDeclaredField(message, "text", true);
 
-        message.setUsername("username");
-
-        Assert.assertEquals("username", message.getUsername());
+        Assert.assertEquals("another message", textValue);
     }
 
     /**
-     * Test getter and setter for {@code location} field of {@link Message}.
+     * Test getter for {@code chatId} field.
      *
-     * Checks assertions:
-     * 1. {@code location} field of new object must not be null;
-     * 2. Returned value for message which have {@code location} field equals to
-     * {@code [55.45, 37.36]}, must be equals to {@code [55.45, 37.36]}.
+     * Check assertion: returned value must be equals to "3".
      */
     @Test
-    public void testGetAndSetForLocation() throws Exception {
-        Message message = new Message();
+    public void getChatId() throws IllegalAccessException {
+        FieldUtils.writeDeclaredField(message, "chatId", "3", true);
 
-        Assert.assertNotNull(message.getLocation());
-
-        double[] location = {55.45, 37.36};
-
-        message.setLocation(location);
-
-        Assert.assertEquals(location, message.getLocation());
+        Assert.assertEquals("3", message.getChatId());
     }
 
     /**
-     * Test getter and setter for {@code isDefaultLocation} field of {@link
-     * Message}.
+     * Test setter for {@code chatId} field.
      *
-     * checks assertions:
-     * 1. {@code isDefaultLocation} field of new object must be true;
-     * 2. Returned value for message which have {@code isDefaultLocation} field
-     * equals to false, must be equals to false.
+     * Check assertion: value of {@code chatId} field must be equals to "21".
      */
     @Test
-    public void testGetAndSetDefaultLocation() throws Exception {
-        Message message = new Message();
+    public void setChatId() throws IllegalAccessException {
+        message.setChatId("21");
 
-        Assert.assertTrue(message.isDefaultLocation());
+        String chatIdValue = (String) FieldUtils
+            .readDeclaredField(message, "chatId", true);
 
-        message.setDefaultLocation(false);
-        Assert.assertFalse(message.isDefaultLocation());
+        Assert.assertEquals("21", chatIdValue);
     }
 
     /**
-     * Test for {@code equals()} and {@code hashCode()} methods for {@link
-     * Message}.
+     * Test getter for {@code user} field.
      *
-     * Checks assertions:
-     * 1. Clear objects must be equals;
-     * 2. Hashcodes of clear objects must be equals;
-     * 3. Identical objects must be equals;
-     * 4. Hashcodes of identical objects must be equals;
-     * 5. Different objects must not be equals;
-     * 6. Hashcode of different objects must not be equals;
-     * 7. Object must not be equals to object of another class;
-     * 8. Object must be equals to itself.
+     * Check assertion: returned object must be equals to gauge user.
      */
     @Test
-    public void testEqualsAndHashCode() {
+    public void getUser() throws IllegalAccessException {
+        User user = mock(User.class);
+
+        FieldUtils.writeDeclaredField(message, "user", user, true);
+
+        Assert.assertEquals(user, message.getUser());
+    }
+
+    /**
+     * Test setter for {@code user} field.
+     *
+     * Check assertion: value of {@code user} field must be equals to gauge
+     * object.
+     */
+    @Test
+    public void setUser() throws IllegalAccessException {
+        User user = mock(User.class);
+
+        message.setUser(user);
+
+        User userValue = (User) FieldUtils
+            .readDeclaredField(message, "user", true);
+
+        Assert.assertEquals(user, userValue);
+    }
+
+    /**
+     * Test equals() method.
+     *
+     * Check assertion: object must be equals to himself.
+     */
+    @Test
+    public void equals_same_returnTrue() {
+        Assert.assertTrue(message.equals(message));
+    }
+
+    /**
+     * Test equals() method.
+     *
+     * Check assertion: object does not equals to object of another class.
+     */
+    @Test
+    public void equals_anotherClass_returnFalse() {
+        Assert.assertFalse(message.equals(new Object()));
+    }
+
+    /**
+     * Test equals() method.
+     *
+     * Check assertion: different objects do not equals.
+     */
+    @Test
+    public void equals_different_returnFalse() {
         Message message1 = new Message();
-        Message message2 = new Message();
-
-        Assert.assertTrue("Test equals() for clear objects",
-            message1.equals(message2) && message2.equals(message1));
-        Assert.assertTrue("Test hashCode() for clear objects",
-            message1.hashCode() == message2.hashCode());
-
-        double[] location = {52.31, 85.10};
-
         message1.setId(1);
-        message1.setText("The same message");
-        message1.setChatId("1L");
-        message1.setUsername("username");
-        message1.setLocation(location);
-        message1.setDefaultLocation(false);
-
-        message2.setId(1);
-        message2.setText("The same message");
-        message2.setChatId("1L");
-        message2.setUsername("username");
-        message2.setLocation(location);
-        message2.setDefaultLocation(false);
-
-        Assert.assertTrue("Test equals() for identical objects",
-            message1.equals(message2) && message2.equals(message1));
-        Assert.assertTrue("Test hashCode() for identical objects",
-            message1.hashCode() == message2.hashCode());
-
+        Message message2 = new Message();
         message2.setId(2);
-        message2.setText("Another message");
-        message2.setChatId("2L");
-        message2.setUsername("user");
-        message2.setLocation(new double[]{51.28, 0.0});
-        message2.setDefaultLocation(true);
 
-        Assert.assertFalse("Test equals() for different objects",
-            message1.equals(message2) && message2.equals(message1));
-        Assert.assertFalse("Test hashCode() for different objects",
-            message1.hashCode() == message2.hashCode());
+        Assert.assertFalse(message1.equals(message2));
+    }
 
-        Assert.assertFalse(message1.equals(new Object()));
-        Assert.assertTrue("Test equals() for the same object",
-            message1.equals(message1));
+    /**
+     * Test equals() method.
+     *
+     * Check assertion: identical objects must be equals.
+     */
+    @Test
+    public void equals_identical_returnTrue() {
+        Message message1 = new Message();
+        message1.setText("test message");
+        Message message2 = new Message();
+        message2.setText("test message");
 
-        message2.setId(1);
-        message1.setText(null);
+        Assert.assertTrue(message1.equals(message2));
+    }
 
-        Assert.assertFalse(
-            message1.equals(message2) && message2.equals(message1));
+    /**
+     * Test hashCode() method.
+     *
+     * Check assertion: hash codes for the same objects must be equals.
+     */
+    @Test
+    public void hashCode_same_returnTrue() {
+        Assert.assertTrue(message.hashCode() == message.hashCode());
+    }
+
+    /**
+     * Test hashCode() method.
+     *
+     * Check assertion: hash codes for different objects do not equals.
+     */
+    @Test
+    public void hashCode_different_returnFalse() {
+        Message message1 = new Message();
+        message1.setId(1);
+        Message message2 = new Message();
+        message2.setId(2);
+
+        Assert.assertFalse(message1.hashCode() == message2.hashCode());
+    }
+
+    /**
+     * Test hashCode() method.
+     *
+     * Check assertion: hash codes for identical objects must be equals.
+     */
+    @Test
+    public void hashCode_identical_returnTrue() {
+        Message message1 = new Message();
+        message1.setText("test message");
+        Message message2 = new Message();
+        message2.setText("test message");
+
+        Assert.assertTrue(message1.hashCode() == message2.hashCode());
     }
 }

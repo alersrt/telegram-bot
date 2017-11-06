@@ -1,10 +1,9 @@
 package com.instrumentisto.timebot.controller;
 
+import com.instrumentisto.timebot.DTO.MessageDTO;
 import com.instrumentisto.timebot.conf.logging.Logging;
-import com.instrumentisto.timebot.exception.repository.InMemoryRepositoryIsEmpty;
 import com.instrumentisto.timebot.handler.RequestHandler;
 import com.instrumentisto.timebot.handler.ResponseHandler;
-import com.instrumentisto.timebot.util.ConverterUtil;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.GetUpdates;
@@ -15,6 +14,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,7 +39,7 @@ public class TelegramController implements BotController {
      * Exemplar of object for work with Telegram Bot API.
      */
     @Autowired
-    TelegramBot telegramBot;
+    private TelegramBot telegramBot;
 
     /**
      * {@link RequestHandler} exemplar.
@@ -54,16 +54,10 @@ public class TelegramController implements BotController {
     private ResponseHandler responseHandler;
 
     /**
-     * {@link ConverterUtil} for {@link Update}.
+     * Conversion Service from Spring
      */
     @Autowired
-    private ConverterUtil<Update> updateConverterUtil;
-
-    /**
-     * {@link ConverterUtil} for {@link SendMessage}.
-     */
-    @Autowired
-    private ConverterUtil<SendMessage> sendMessageConverterUtil;
+    private ConversionService converter;
 
     /**
      * {@inheritDoc}
@@ -78,26 +72,21 @@ public class TelegramController implements BotController {
                 .execute(getUpdates);
 
             List<Update> updates = getUpdatesResponse.updates();
-            updates.stream()
-                .map(updateConverterUtil::toDTO)
+            updates.stream().filter(u -> u.message() != null)
+                .map(u -> converter.convert(u.message(), MessageDTO.class))
                 .forEach(requestHandler::handleRequest);
 
             lastUpdateId =
                 updates.size() > 0 ? updates.get(updates.size() - 1).updateId()
                     + 1 : 0;
 
-            try {
-                responseHandler.handleResponse().stream()
-                    .map(sendMessageConverterUtil::fromDTO)
-                    .forEach(sm -> {
-                        telegramBot.execute(sm);
-                        logger.info(String.format("Answer was sent to %s",
-                            sm.getParameters().get("chat_id")));
-                    });
-            } catch (InMemoryRepositoryIsEmpty e) {
-                // InMemoryRepositoryIsEmpty exception just talks that repository
-                // is empty at the current moment.
-            }
+            responseHandler.handleResponse().stream()
+                .map(m -> converter.convert(m, SendMessage.class))
+                .forEach(sm -> {
+                    telegramBot.execute(sm);
+                    logger.info(String.format("Answer was sent to %s",
+                        sm.getParameters().get("chat_id")));
+                });
 
             Thread.sleep(timeout);
         }

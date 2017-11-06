@@ -1,12 +1,14 @@
 package com.instrumentisto.timebot.handler;
 
-import com.instrumentisto.timebot.DTO.BaseDTO;
+import com.instrumentisto.timebot.DTO.MessageDTO;
 import com.instrumentisto.timebot.entity.Message;
+import com.instrumentisto.timebot.entity.User;
+import com.instrumentisto.timebot.repository.MessageRepository;
+import com.instrumentisto.timebot.repository.UserRepository;
 import com.instrumentisto.timebot.service.MessageQueryService;
-import com.instrumentisto.timebot.service.MessageTransferService;
-import com.instrumentisto.timebot.util.ConverterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,18 +18,10 @@ import org.springframework.stereotype.Component;
 public class TelegramRequestHandler implements RequestHandler {
 
     /**
-     * Converter which needs for converting {@link BaseDTO} to {@link Message}.
+     * Conversion service.
      */
     @Autowired
-    @Qualifier("telegramMessageConverterUtil")
-    private ConverterUtil<Message> converterUtil;
-
-    /**
-     * {@link MessageTransferService} which works with repository.
-     */
-    @Autowired
-    @Qualifier("telegramMessageTransferService")
-    private MessageTransferService messageTransferService;
+    private ConversionService converter;
 
     /**
      * {@link MessageQueryService} which process "time" query.
@@ -52,22 +46,52 @@ public class TelegramRequestHandler implements RequestHandler {
     private MessageQueryService defaultService;
 
     /**
+     * User's repository.
+     */
+    @Autowired
+    private UserRepository userRepository;
+
+    /**
+     * Message's repository.
+     */
+    @Autowired
+    private MessageRepository messageRepository;
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void handleRequest(BaseDTO baseDTO) {
+    public void handleRequest(MessageDTO messageDTO) {
+        Message message = converter.convert(messageDTO, Message.class);
+        boolean isLocationDefault = messageDTO.isLocationDefault();
 
-        Message message = converterUtil.fromDTO(baseDTO);
+        User existsUser = userRepository.findByApiId(message.getUser().getApiId());
 
-        if ("/time".equals(message.getText()) || !message.isDefaultLocation()) {
-            messageTransferService
-                .saveMessage(timeService.queryProcessor(message));
-        } else if ("/start".equals(message.getText())) {
-            messageTransferService
-                .saveMessage(startService.queryProcessor(message));
+        if (existsUser == null) {
+            userRepository.save(message.getUser());
         } else {
-            messageTransferService
-                .saveMessage(defaultService.queryProcessor(message));
+            if (!isLocationDefault) {
+                existsUser.setLocation(
+                    message.getUser().getLocation()[0],
+                    message.getUser().getLocation()[1]
+                );
+                userRepository.save(existsUser);
+            }
+            message.setUser(existsUser);
+        }
+
+        checkCommand(message, isLocationDefault);
+    }
+
+    private void checkCommand(Message message, boolean isLocationDefault) {
+        String command = message.getText();
+
+        if ("/time".equals(command)) {
+            messageRepository.save(timeService.queryProcessor(message));
+        } else if ("/start".equals(command)) {
+            messageRepository.save(startService.queryProcessor(message));
+        } else if (isLocationDefault) {
+            messageRepository.save(defaultService.queryProcessor(message));
         }
     }
 }

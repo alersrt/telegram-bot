@@ -14,10 +14,34 @@ import org.springframework.context.annotation.PropertySource;
 public class GoogleMapsAPIConfig {
 
     /**
-     * Key which used for access to GoogleMaps API
+     * Key which used for access to GoogleMaps API.
      */
     @Value("${google.api.key}")
     private String key;
+
+    /**
+     * Default latitude.
+     */
+    @Value("${location.default.latitude}")
+    private double defaultLatitude;
+
+    /**
+     * Default longitude.
+     */
+    @Value("${location.default.longitude}")
+    private double defaultLongitude;
+
+    /**
+     * Default username.
+     */
+    @Value("${username.default}")
+    private String defaultUsername;
+
+    /**
+     * Default message for {@code /start} command.
+     */
+    @Value("${service.start.message}")
+    private String startMessage;
 
     /**
      * Returns {@link GeoApiContext} bean for our key.
@@ -27,5 +51,45 @@ public class GoogleMapsAPIConfig {
     @Bean
     public GeoApiContext geoApiContext() {
         return new GeoApiContext.Builder().apiKey(key).build();
+    }
+
+    /**
+     * Returns default latitude.
+     *
+     * @return double value.
+     */
+    @Bean
+    public double getDefaultLatitude() {
+        return this.defaultLatitude;
+    }
+
+    /**
+     * Returns default longitude.
+     *
+     * @return double value.
+     */
+    @Bean
+    public double getDefaultLongitude() {
+        return this.defaultLongitude;
+    }
+
+    /**
+     * Returns default username.
+     *
+     * @return {@link String} value.
+     */
+    @Bean
+    public String getDefaultUsername() {
+        return defaultUsername;
+    }
+
+    /**
+     * Returns message of start command.
+     *
+     * @return {@link String} value.
+     */
+    @Bean
+    public String getStartMessage() {
+        return startMessage;
     }
 }
