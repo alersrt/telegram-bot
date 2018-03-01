@@ -14,6 +14,19 @@ bot.datetime.format="yyyy-MM-dd HH:mm:ss.SSS"
 
 # Timeout pooling queries for bot
 bot.timeout=1000
+
+# Key which is used for access to Googleapis.
+google.api.key = [key]
+
+# Default latitude and longitude
+location.default.latitude = 52.31
+location.default.longitude = 85.10
+
+# Default username for these who have no username
+username.default = unknown
+
+# Default messages for services
+service.start.message = Please, send your location if you want to get your local time.
 ```
 
 You can read about datetime format [there][15].
