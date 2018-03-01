@@ -1,13 +1,10 @@
 buildscript {
-    ext {
-        springBootVersion = '2.0.0.M5'
-    }
     repositories {
         mavenCentral()
         maven { url 'https://repo.spring.io/libs-snapshot' }
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${gradle.springBootVersion}"
     }
 }
 
@@ -20,7 +17,7 @@ plugins {
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'java'
-apply plugin: "jacoco"
+apply plugin: 'jacoco'
 apply plugin: 'pmd'
 
 group 'com.instrumentisto'
@@ -42,15 +39,23 @@ bootJar {
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile("org.springframework.boot:spring-boot-starter-log4j2")
+
     compile group: 'com.github.pengrad', name: 'java-telegram-bot-api', version: gradle.jtbaVersion
     compile group: 'com.google.maps', name: 'google-maps-services', version: gradle.googlemapsVersion
     compile group: 'org.apache.commons', name: 'commons-lang3', version: gradle.aclang3Version
     compile group: 'com.h2database', name:'h2', version: gradle.h2Version
     compile group: 'org.hibernate', name: 'hibernate-validator', version: gradle.hibernateValidatorVersion
 
+    compileOnly("org.projectlombok:lombok:${gradle.lombokVersion}")
+
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: gradle.junitVersion
     testCompile group: 'org.mockito', name: 'mockito-core', version: gradle.mockitoVersion
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+configurations {
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
 // Download dependencies

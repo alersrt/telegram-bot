@@ -1,7 +1,6 @@
 package com.instrumentisto.timebot.controller;
 
 import com.instrumentisto.timebot.DTO.MessageDTO;
-import com.instrumentisto.timebot.conf.logging.Logging;
 import com.instrumentisto.timebot.handler.RequestHandler;
 import com.instrumentisto.timebot.handler.ResponseHandler;
 import com.pengrad.telegrambot.TelegramBot;
@@ -10,7 +9,7 @@ import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.GetUpdatesResponse;
 import java.util.List;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -20,14 +19,9 @@ import org.springframework.stereotype.Component;
 /**
  * Implementation of {@link BotController}. Main controller of bot.
  */
+@Slf4j
 @Component
 public class TelegramController implements BotController {
-
-    /**
-     * {@link Logger} exemplar for this controller.
-     */
-    @Logging
-    private Logger logger;
 
     /**
      * Timeout value which injected from properties file.
@@ -84,7 +78,7 @@ public class TelegramController implements BotController {
                 .map(m -> converter.convert(m, SendMessage.class))
                 .forEach(sm -> {
                     telegramBot.execute(sm);
-                    logger.info(String.format("Answer was sent to %s",
+                    log.info(String.format("Answer was sent to %s",
                         sm.getParameters().get("chat_id")));
                 });
 
