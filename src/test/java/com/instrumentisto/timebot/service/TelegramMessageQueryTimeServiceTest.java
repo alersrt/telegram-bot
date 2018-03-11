@@ -48,7 +48,8 @@ public class TelegramMessageQueryTimeServiceTest {
         String datetimePattern = "yyyy-MM-dd HH:mm:ss.SSS";
 
         User user = mock(User.class);
-        when(user.getLocation()).thenReturn(new double[]{51.28, 0.0});
+        when(user.getLatitude()).thenReturn(51.28);
+        when(user.getLongitude()).thenReturn(0.0);
         Message message = spy(Message.class);
         when(message.getUser()).thenReturn(user);
 

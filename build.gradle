@@ -81,6 +81,10 @@ processResources {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.0"
+}
+
 // Settings for JaCoCo report: enabled Html-report; excludes excess packages and classes from JaCoCo
 jacocoTestReport {
     reports {

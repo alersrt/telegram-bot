@@ -34,8 +34,9 @@ public class TelegramMessageQueryTimeService implements MessageQueryService {
      */
     @Override
     public Message queryProcessor(Message message) {
-        double[] location = message.getUser().getLocation();
-        String timezoneId = geoAPI.getTimeZoneId(location[0], location[1]);
+        double latitude = message.getUser().getLatitude();
+        double longitude = message.getUser().getLongitude();
+        String timezoneId = geoAPI.getTimeZoneId(latitude, longitude);
 
         LocalDateTime localDateTime = LocalDateTime
             .now(ZoneId.of(timezoneId));

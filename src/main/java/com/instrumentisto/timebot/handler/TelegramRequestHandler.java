@@ -71,10 +71,8 @@ public class TelegramRequestHandler implements RequestHandler {
             userRepository.save(message.getUser());
         } else {
             if (!isLocationDefault) {
-                existsUser.setLocation(
-                    message.getUser().getLocation()[0],
-                    message.getUser().getLocation()[1]
-                );
+                existsUser.setLatitude(message.getUser().getLatitude());
+                existsUser.setLongitude(message.getUser().getLongitude());
                 userRepository.save(existsUser);
             }
             message.setUser(existsUser);

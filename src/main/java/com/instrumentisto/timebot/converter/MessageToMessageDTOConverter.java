@@ -26,8 +26,8 @@ public class MessageToMessageDTOConverter implements
         UserDTO userDTO = new UserDTO();
         userDTO.setApiId(source.getUser().getApiId());
         userDTO.setUsername(source.getUser().getUsername());
-        userDTO.setLatitude(source.getUser().getLocation()[0]);
-        userDTO.setLongitude(source.getUser().getLocation()[1]);
+        userDTO.setLatitude(source.getUser().getLatitude());
+        userDTO.setLongitude(source.getUser().getLongitude());
 
         messageDTO.setChatId(source.getChatId());
         messageDTO.setText(source.getText());

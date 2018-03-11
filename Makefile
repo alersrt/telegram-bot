@@ -35,13 +35,23 @@ endif
 
 #clean command
 clean:
-	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-    gradle:latest gradle clean
+	docker run \
+		-it \
+		--rm \
+		--net=host \
+		-v "$PWD":/app  \
+		-w /app gradle:latest \
+		gradle --no-daemon --console=plain -g /app/.gradle clean
 
 # build command
 build:
-	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-	gradle:alpine gradle  build -x test
+	docker run \
+		-it \
+		--rm \
+		--net=host \
+		-v "$PWD":/app  \
+		-w /app gradle:latest \
+		gradle --no-daemon --console=plain -g /app/.gradle build -x test
 
 # run command
 run: | build
@@ -50,18 +60,33 @@ run: | build
 
 # docs command
 docs:
-	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-	gradle:alpine gradle javadoc
+	docker run \
+		-it \
+		--rm \
+		--net=host \
+		-v "$PWD":/app  \
+		-w /app gradle:latest \
+		gradle --no-daemon --console=plain -g /app/.gradle javadoc
 
 # test command
 test:
-	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-    gradle:alpine gradle test jacocoTestReport \
-    jacocoTestCoverageVerification pitest
+	docker run \
+		-it \
+		--rm \
+		--net=host \
+		-v "$PWD":/app  \
+		-w /app gradle:latest \
+		gradle --no-daemon --console=plain -g /app/.gradle \
+		test jacocoTestReport jacocoTestCoverageVerification pitest
 
 # lint command
 lint:
-	docker run --rm -v ${PWD}:/home/gradle/project -w /home/gradle/project \
-    gradle:alpine gradle pmdMain pmdTest
+	docker run \
+		-it \
+		--rm \
+		--net=host \
+		-v "$PWD":/app  \
+		-w /app gradle:latest \
+		gradle --no-daemon --console=plain -g /app/.gradle pmdMain pmdTest
 
 .PHONY: clean docs test lint run build squash
