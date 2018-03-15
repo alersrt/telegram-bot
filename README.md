@@ -1,5 +1,7 @@
 Telegram Time Bot
 =================
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9eefd33aa6d94d6fbf15123ba8279e7a)](https://www.codacy.com/app/alersrt/telegram-bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alersrt/telegram-bot&amp;utm_campaign=Badge_Grade)
+
 
 ### Build Application
 
