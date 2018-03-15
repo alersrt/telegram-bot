@@ -1,4 +1,4 @@
-package com.instrumentisto.timebot.conf;
+package com.instrumentisto.timebot.config;
 
 import com.instrumentisto.timebot.converter.MessageDTOToMessageConverter;
 import com.instrumentisto.timebot.converter.MessageDTOToTelegramSendMessageConverter;

@@ -1,4 +1,4 @@
-package com.instrumentisto.timebot.conf;
+package com.instrumentisto.timebot.config;
 
 import com.google.maps.GeoApiContext;
 import org.springframework.beans.factory.annotation.Value;

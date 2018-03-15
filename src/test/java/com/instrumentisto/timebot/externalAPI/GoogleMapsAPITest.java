@@ -3,7 +3,7 @@ package com.instrumentisto.timebot.externalAPI;
 import static org.mockito.Mockito.doReturn;
 
 import com.google.maps.GeoApiContext;
-import com.instrumentisto.timebot.conf.wrapper.googlemapsapi.TimeZoneApiNonStaticWrapper;
+import com.instrumentisto.timebot.config.wrapper.googlemapsapi.TimeZoneApiNonStaticWrapper;
 import java.util.TimeZone;
 import org.junit.Assert;
 import org.junit.Test;

@@ -17,23 +17,27 @@ include 'services:webservice'
 
 rootProject.name = 'time-api'
 
-// java-telegram-bot-api version
-gradle.ext.jtbaVersion = '3.3.0'
+gradle.ext {
+    // java-telegram-bot-api version
+    jtbaVersion = '3.3.0'
+    // JUnit version
+    junitVersion = '5.0.1'
+    // Mockito version
+    mockitoVersion = '2.11.0'
+    // GeoNames API version
+    googlemapsVersion = '0.2.4'
+    // Apache Commons Lang3 version
+    aclang3Version = '3.6'
+    // H2 database version
+    h2Version = '1.4.196'
+    // Hibernate Validator version
+    hibernateValidatorVersion = '6.0.4.Final'
+    // Lombok version
+    lombokVersion = '1.16.20'
 
-// JUnit version
-gradle.ext.junitVersion = '5.0.1'
+    //Spring Boot version
+    springBootVersion = '2.0.0.M5'
+}
 
-// Mockito version
-gradle.ext.mockitoVersion = '2.11.0'
 
-// GeoNames API version
-gradle.ext.googlemapsVersion = '0.2.4'
 
-// Apache Commons Lang3 version
-gradle.ext.aclang3Version = '3.6'
-
-// H2 database version
-gradle.ext.h2Version = '1.4.196'
-
-// Hibernate Validator version
-gradle.ext.hibernateValidatorVersion = '6.0.4.Final'

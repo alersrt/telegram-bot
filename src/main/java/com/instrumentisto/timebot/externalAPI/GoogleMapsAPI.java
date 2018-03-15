@@ -1,6 +1,6 @@
 package com.instrumentisto.timebot.externalAPI;
 
-import com.instrumentisto.timebot.conf.wrapper.googlemapsapi.TimeZoneApiNonStaticWrapper;
+import com.instrumentisto.timebot.config.wrapper.googlemapsapi.TimeZoneApiNonStaticWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

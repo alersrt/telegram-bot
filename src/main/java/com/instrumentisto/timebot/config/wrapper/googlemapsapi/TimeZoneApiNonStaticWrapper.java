@@ -1,4 +1,4 @@
-package com.instrumentisto.timebot.conf.wrapper.googlemapsapi;
+package com.instrumentisto.timebot.config.wrapper.googlemapsapi;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.TimeZoneApi;

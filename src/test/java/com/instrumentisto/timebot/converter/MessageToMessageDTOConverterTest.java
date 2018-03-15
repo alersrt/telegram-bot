@@ -30,7 +30,8 @@ public class MessageToMessageDTOConverterTest {
         Message message = mock(Message.class);
         User user = mock(User.class);
 
-        when(user.getLocation()).thenReturn(new double[]{51.28, 0.0});
+        when(user.getLatitude()).thenReturn(51.28);
+        when(user.getLongitude()).thenReturn(0.0);
         when(user.getApiId()).thenReturn("0");
         when(user.getUsername()).thenReturn("tester");
 

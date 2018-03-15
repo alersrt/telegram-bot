@@ -27,7 +27,8 @@ public class MessageDTOToMessageConverter implements
 
         user.setApiId(source.getUserDTO().getApiId());
         user.setUsername(source.getUserDTO().getUsername());
-        user.setLocation(source.getUserDTO().getLatitude(), source.getUserDTO().getLongitude());
+        user.setLatitude(source.getUserDTO().getLatitude());
+        user.setLongitude(source.getUserDTO().getLongitude());
 
         message.setChatId(source.getChatId());
         message.setText(source.getText());

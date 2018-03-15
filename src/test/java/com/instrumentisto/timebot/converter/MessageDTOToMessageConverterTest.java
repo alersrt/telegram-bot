@@ -42,7 +42,8 @@ public class MessageDTOToMessageConverterTest {
 
         user.setApiId("0");
         user.setUsername("tester");
-        user.setLocation(51.28, 0.0);
+        user.setLatitude(51.28);
+        user.setLongitude(0.0);
 
         message.setChatId("0");
         message.setText("test message");
