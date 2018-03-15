@@ -36,7 +36,6 @@ endif
 #clean command
 clean:
 	docker run \
-		-it \
 		--rm \
 		--net=host \
 		-v "$PWD":/app  \
@@ -46,7 +45,6 @@ clean:
 # build command
 build:
 	docker run \
-		-it \
 		--rm \
 		--net=host \
 		-v "$PWD":/app  \
@@ -61,7 +59,6 @@ run: | build
 # docs command
 docs:
 	docker run \
-		-it \
 		--rm \
 		--net=host \
 		-v "$PWD":/app  \
@@ -71,7 +68,6 @@ docs:
 # test command
 test:
 	docker run \
-		-it \
 		--rm \
 		--net=host \
 		-v "$PWD":/app  \
@@ -82,7 +78,6 @@ test:
 # lint command
 lint:
 	docker run \
-		-it \
 		--rm \
 		--net=host \
 		-v "$PWD":/app  \
