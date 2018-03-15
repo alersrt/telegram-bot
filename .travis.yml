@@ -2,6 +2,6 @@ language: java
 
 script:
   - gradle clean
-  - gradle lint
-  - gradle test
-  - gradle build
+  - gradle pmdMain pmdTest
+  - gradle test jacocoTestReport jacocoTestCoverageVerification pitest
+  - gradle build -x test
