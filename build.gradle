@@ -96,7 +96,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/conf/**',
+                    '**/config/**',
                     '**/controller/**',
                     '**/Bot*'
             ])
@@ -116,7 +116,7 @@ pitest {
     outputFormats = ['XML', 'HTML']
     timestampedReports = false
     excludedClasses = [
-            'com.instrumentisto.timebot.conf.*',
+            'com.instrumentisto.timebot.config.*',
             'com.instrumentisto.timebot.controller.*',
             'com.instrumentisto.timebot.Bot'
     ]
