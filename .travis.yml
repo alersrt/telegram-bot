@@ -1,0 +1,7 @@
+language: java
+
+script:
+  - gradle clean
+  - gradle lint
+  - gradle test
+  - gradle build
